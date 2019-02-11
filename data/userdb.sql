@@ -17,7 +17,8 @@ DROP TABLE IF EXISTS public.boards;
 CREATE TABLE boards
 (
   id    serial NOT NULL,
-  title text
+  title text,
+  statuses text
 );
 
 ALTER TABLE ONLY boards
@@ -62,9 +63,9 @@ VALUES (4, 'Done');
 
 
 INSERT INTO boards
-VALUES (1, 'Test Board 1');
+VALUES (1, 'Test Board 1', 'New, In Progress, Testing, Done');
 INSERT INTO boards
-VALUES (2, 'Test Board 2');
+VALUES (2, 'Test Board 2', 'New, In Progress, Testing, Done');
 
 
 INSERT INTO cards
