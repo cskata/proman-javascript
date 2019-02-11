@@ -9,7 +9,7 @@ function init() {
 
     const addNewBoard = document.querySelector('#new-board-button');
     addNewBoard.addEventListener('click', function(){
-        templates.createBoardElement('Test Board', ['New', 'In Progress', 'Testing', 'Failed']);
+        templates.createBoardElement('Test Board', ['New', 'In Progress', 'Testing', 'Failed'], '1');
     });
 
 
