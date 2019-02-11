@@ -1,3 +1,52 @@
-#boards {
+html, body {
+    margin: 0;
+    padding:0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+/*#boards {
     background-color: green;
+}*/
+nav {
+    height: 50px;
+    background-color: lightsalmon;
+    line-height: 50px;
+    padding: 10px 40px;
+}
+#full-content {
+    padding: 20px;
+    background-color: lightsteelblue;
+}
+.board-header {
+    padding: 20px;
+}
+.board-body {
+    margin-bottom: 20px;
+}
+.board-data, .board-data th, .board-data td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.board-data th, .board-data td {
+    padding: 20px;
+    width: 250px;
+}
+.card {
+    width: 200px;
+    height: auto;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px dotted black;
+}
+button {
+    margin-left: 20px;
+    padding: 10px 20px;
+    background-color: lightslategrey;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+button:hover {
+    background-color: steelblue;
 }
