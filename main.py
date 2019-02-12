@@ -8,7 +8,6 @@ app = Flask(__name__)
 @app.route("/")
 def route_index():
     ''' this is a one-pager which shows all the boards and cards '''
-    print(data_manager.get_last_id("boards"))
     return render_template('boards.html')
 
 
@@ -31,10 +30,17 @@ def save_board():
     return "", 204
 
 
+@app.route("/save-card", methods=["POST"])
+def save_card():
+    data = request.get_json()
+    data_manager.add_new_card(data)
+    return "", 204
+
+
 def main():
     app.run(
         host='0.0.0.0',
-        port=8001,
+        port=8000,
         debug=True
     )
 

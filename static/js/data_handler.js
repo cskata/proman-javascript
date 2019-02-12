@@ -54,7 +54,6 @@ export let dataHandler = {
     saveNewBoard: function() {
         let url = '/save-board';
         let data = {title: "New Board", statuses: "New, In Progress, Testing, Done"};
-        console.log(data);
 
         fetch(url, {
           method: 'POST',
@@ -62,7 +61,19 @@ export let dataHandler = {
           headers:{
             'Content-Type': 'application/json'
           }
+        })
+        .then(response => console.log('Success:', JSON.stringify(response)))
+    },
+    saveNewCard: function(board_id) {
+        let url = '/save-card';
+        let data = {title: "New Card", board_id: board_id, status_id: 1, order_num: 1};
 
+        fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers:{
+            'Content-Type': 'application/json'
+          }
         })
         .then(response => console.log('Success:', JSON.stringify(response)))
     }

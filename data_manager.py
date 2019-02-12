@@ -42,6 +42,16 @@ def add_new_board(cursor, new_board):
                    {"title": new_board["title"], "statuses": new_board["statuses"]})
 
 
+@connection_handler
+def add_new_card(cursor, new_card):
+    cursor.execute("""
+                    INSERT INTO cards (title, board_id, status_id, order_num)
+                    VALUES (%(title)s, %(board_id)s, %(status_id)s, %(order_num)s);
+                    """,
+               {"title": new_card["title"], "board_id": new_card["board_id"],
+                "status_id": new_card["status_id"], "order_num": new_card["order_num"]})
+
+
 def format_boards_with_cards(boards):
     for board in boards:
         board["cards"] = get_cards(board["id"])

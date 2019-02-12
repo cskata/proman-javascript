@@ -1,3 +1,5 @@
+import {dataHandler} from "./data_handler.js";
+
 export let templates = {
     createBoardElement: function (boardTitle, boardStatuses, boardId) {
 
@@ -35,10 +37,11 @@ export let templates = {
         return newCardButton
     },
     handleNewCardButtonClick: function(event){
-        let newCard = templates.createCardElement('Test Card');
         let boardButton = event.currentTarget;
         let board = boardButton.parentNode.parentNode;
         let boardId = board.dataset.boardId;
+        dataHandler.saveNewCard(boardId);
+        let newCard = templates.createCardElement('Test Card');
         let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .cards > :first-child`);
         firstColumn.appendChild(newCard);
     },
