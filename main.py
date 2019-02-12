@@ -8,7 +8,14 @@ app = Flask(__name__)
 @app.route("/")
 def route_index():
     ''' this is a one-pager which shows all the boards and cards '''
+    print(data_manager.get_last_id("boards"))
     return render_template('boards.html')
+
+
+@app.route("/max-id", methods=['GET'])
+def get_max_id():
+    ids = {"board_id": data_manager.get_last_id("boards"), "card_id": data_manager.get_last_id("cards")}
+    return jsonify(ids)
 
 
 @app.route("/boards", methods=['GET'])

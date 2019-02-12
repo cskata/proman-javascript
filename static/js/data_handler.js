@@ -5,6 +5,7 @@
 // object itself then you must use the 'this' keyword before. For example: 'this._data' below)
 
 import {dom} from "./dom.js";
+import {templates} from "./templates.js";
 
 export let dataHandler = {
     keyInLocalStorage: 'proman-data', // the string that you use as a key in localStorage to save your application data
@@ -46,6 +47,13 @@ export let dataHandler = {
     },
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
-    }
+    },
     // here comes more features
+    getMaxIds: function (){
+        fetch('/max-id')
+        .then((response) => response.json())
+        .then((response) =>
+            templates.createBoardElement('New Board', ['New', 'In Progress', 'Testing', 'Done'], response.board_id + 1) );
+
+    }
 };

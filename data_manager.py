@@ -1,4 +1,5 @@
 from connection import connection_handler
+from psycopg2 import sql
 
 
 @connection_handler
@@ -21,6 +22,15 @@ def get_cards(cursor, board_id):
                    {"board_id": board_id})
     cards = cursor.fetchall()
     return cards
+
+
+@connection_handler
+def get_last_id(cursor, table):
+    cursor.execute(sql.SQL("""
+                    SELECT max(id) FROM {table};
+                    """).format(table=sql.Identifier(table)))
+    max_id = cursor.fetchone()
+    return max_id["max"]
 
 
 def format_boards_with_cards(boards):
