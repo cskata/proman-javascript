@@ -34,9 +34,10 @@ export let templates = {
         newCardButton.innerHTML = 'Add New Card';
         return newCardButton
     },
-    handleNewCardButtonClick: function(){
+    handleNewCardButtonClick: function(event){
         let newCard = templates.createCardElement('Test Card');
-        let board = document.querySelector(".board");
+        let boardButton = event.currentTarget;
+        let board = boardButton.parentNode.parentNode;
         let boardId = board.dataset.boardId;
         let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .cards > :first-child`);
         firstColumn.appendChild(newCard);
@@ -76,7 +77,6 @@ export let templates = {
         tableBody.classList.add('cards');
         for(let i = 0; i < boardStatuses.length; i++){
             let cell = document.createElement('td');
-            cell.dataset.statusId = `${i + 1}`;
             tableBody.appendChild(cell);
         }
         return tableBody

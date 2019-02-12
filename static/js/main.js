@@ -11,8 +11,8 @@ function init() {
 
     const addNewBoard = document.querySelector('#new-board-button');
     addNewBoard.addEventListener('click', function(){
-        dataHandler.createNewBoard();
         dataHandler.saveNewBoard();
+        dataHandler.createNewBoard();
     });
 
 
