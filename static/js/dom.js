@@ -1,11 +1,16 @@
 // It uses data_handler.js to visualize elements
-let dom = {
+import {templates} from "./templates.js";
+
+export let dom = {
     loadBoards: function () {
         // retrieves boards and makes showBoards called
     },
     showBoards: function (boards) {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
+        for (let board of boards){
+            templates.createBoardElement(board.title,board.statuses, board.id)
+        }
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
