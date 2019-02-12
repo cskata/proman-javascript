@@ -19,6 +19,7 @@ export let templates = {
         let boardBody = templates.createBoardBody(boardStatuses);
 
         board.appendChild(boardHeader);
+        boardHeader.addEventListener('click', dom.toggleBoard);
         board.appendChild(boardBody);
 
         fullContent.appendChild(board);
@@ -34,7 +35,6 @@ export let templates = {
         boardHeader.dataset.open = 'true';
         boardHeader.dataset.heightChecked = 'false';
         boardHeader.dataset.initHeight = '0';
-        boardHeader.addEventListener('click', dom.toggleBoard);
         return boardHeader
     },
     createNewCardButton: function () {
@@ -47,6 +47,13 @@ export let templates = {
         let newCard = templates.createCardElement('Test Card');
         let board = document.querySelector(".board");
         let boardId = board.dataset.boardId;
+
+        let boardBody = document.querySelector(`.board[data-board-id="${boardId}"] .board-body`);
+        boardBody.style.height = 'auto';
+        let boardHeader = document.querySelector(`.board[data-board-id="${boardId}"] .board-header`);
+        boardHeader.dataset.heightChecked = 'false';
+        boardHeader.dataset.initHeight = '0';
+
         let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .cards > :first-child`);
         firstColumn.appendChild(newCard);
     },

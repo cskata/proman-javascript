@@ -24,14 +24,13 @@ nav {
 
 .board {
     padding: 20px;
-    height: auto;
-    overflow: auto;
 }
 
 
 .board-header {
     padding: 20px;
     border: 1px solid black;
+    cursor: pointer;
 }
 
 .board-body {
@@ -50,7 +49,6 @@ nav {
 .board-data th, .board-data td {
     padding: 20px;
     width: 25vw;
-    overflow: auto;
 }
 
 .card {
@@ -76,7 +74,7 @@ button:hover {
 
 .fas {
     float: right;
-    font-size: 2vw;
+    font-size: 2em;
     padding-top: 0.4vw;
     -webkit-transition: all 0.8s ease-in-out;
     transition: all 0.8s ease-in-out;
