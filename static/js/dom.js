@@ -20,9 +20,7 @@ export let dom = {
         // shows the cards of a board
         // it adds necessary event listeners also
         let cards = board.cards;
-        console.log(cards);
         for (let i = 0; i < cards.length; i++) {
-            console.log(cards[i]);
             let column = dom.addCard(board, cards[i]);
             let cardElement = templates.createCardElement(cards[i].title);
             column.appendChild(cardElement);
@@ -46,16 +44,16 @@ export let dom = {
     addCard: function(board, card) {
         let column;
         if (card.status_id === 1) {
-            column = document.querySelector(`.board[data-board-id='${board.id}] .cards > :first-child`);
+            column = document.querySelector(`.board[data-board-id='${board.id}'] .cards > :first-child`);
         }
         if (card.status_id === 2) {
-            column = document.querySelector(`.board[data-board-id='${board.id}] .cards > :nth-child(${2})`);
+            column = document.querySelector(`.board[data-board-id='${board.id}'] .cards > :nth-child(2)`);
         }
         if (card.status_id === 3) {
-            column = document.querySelector(`.board[data-board-id='${board.id}] .cards > :nth-child(${3})`);
+            column = document.querySelector(`.board[data-board-id='${board.id}'] .cards > :nth-child(3)`);
         }
         if (card.status_id === 4) {
-            column = document.querySelector(`.board[data-board-id='${board.id}] .cards > :last-child`);
+            column = document.querySelector(`.board[data-board-id='${board.id}'] .cards > :last-child`);
         }
         return column
     }
