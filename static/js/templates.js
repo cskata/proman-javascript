@@ -32,7 +32,7 @@ export let templates = {
             <i class="fas fa-caret-up"></i>
             `;
 
-        boardHeader.dataset.open = 'true';
+        boardHeader.dataset.tableIsOpen = 'true';
         boardHeader.dataset.heightChecked = 'false';
         boardHeader.dataset.initHeight = '0';
         return boardHeader
@@ -52,7 +52,6 @@ export let templates = {
         boardBody.style.height = 'auto';
         let boardHeader = document.querySelector(`.board[data-board-id="${boardId}"] .board-header`);
         boardHeader.dataset.heightChecked = 'false';
-        boardHeader.dataset.initHeight = '0';
 
         let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .cards > :first-child`);
         firstColumn.appendChild(newCard);

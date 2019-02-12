@@ -58,7 +58,7 @@ export let dom = {
             return column
         },
         toggleBoard: function (event) {
-            if (event.target.className != 'new-card-button' || event.target.className === 'fas fa-caret-up') {
+            if (event.target.className != 'new-card-button') {
                 let boardHeader;
                 if (event.target.className === 'fas fa-caret-up') {
                     boardHeader = event.target.parentElement;
@@ -71,21 +71,22 @@ export let dom = {
                 const newCardButton = boardHeader.querySelector('.new-card-button');
 
                 let tableHeightChecked = boardHeader.dataset.heightChecked;
-                let isTableOpen = boardHeader.dataset.open;
+                let isTableOpen = boardHeader.dataset.tableIsOpen;
                 let initHeight = boardHeader.dataset.initHeight;
 
                 if (tableHeightChecked === 'false') {
                     boardHeader.dataset.initHeight = `${tableContainer.offsetHeight}`;
                     boardHeader.dataset.heightChecked = 'true';
                 }
+
                 if (isTableOpen === 'true') {
-                    boardHeader.dataset.open = 'false';
+                    boardHeader.dataset.tableIsOpen = 'false';
                     tableContainer.style.height = '0px';
                     arrow.style.transform = "translate(0, 25%) rotateX(180deg)";
                     table.style.display = "none";
                     newCardButton.style.visibility = "hidden";
                 } else {
-                    boardHeader.dataset.open = 'true';
+                    boardHeader.dataset.tableIsOpen = 'true';
                     tableContainer.style.height = `${initHeight}px`;
                     arrow.style.transform = "rotateX(0deg)";
 
