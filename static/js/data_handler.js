@@ -42,18 +42,28 @@ export let dataHandler = {
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
-    createNewBoard: function (boardTitle, callback) {
-        // creates new board, saves it and calls the callback function with its data
-    },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
-        // creates new card, saves it and calls the callback function with its data
-    },
-    // here comes more features
-    getMaxIds: function (){
+    createNewBoard: function () {
         fetch('/max-id')
         .then((response) => response.json())
         .then((response) =>
             templates.createBoardElement('New Board', ['New', 'In Progress', 'Testing', 'Done'], response.board_id + 1) );
+    },
+    createNewCard: function (cardTitle, boardId, statusId, callback) {
+        // creates new card, saves it and calls the callback function with its data
+    },
+    saveNewBoard: function() {
+        let url = '/save-board';
+        let data = {title: "New Board", statuses: "New, In Progress, Testing, Done"};
+        console.log(data);
 
+        fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+
+        })
+        .then(response => console.log('Success:', JSON.stringify(response)))
     }
 };

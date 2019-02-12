@@ -33,6 +33,15 @@ def get_last_id(cursor, table):
     return max_id["max"]
 
 
+@connection_handler
+def add_new_board(cursor, new_board):
+    cursor.execute("""
+                    INSERT INTO boards(title, statuses)
+                    VALUES (%(title)s, %(statuses)s);
+                    """,
+                   {"title": new_board["title"], "statuses": new_board["statuses"]})
+
+
 def format_boards_with_cards(boards):
     for board in boards:
         board["cards"] = get_cards(board["id"])

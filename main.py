@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request, json
 import data_manager
 
 
@@ -22,6 +22,13 @@ def get_max_id():
 def get_boards():
     boards = data_manager.get_boards()
     return jsonify(boards)
+
+
+@app.route("/save-board", methods=['POST'])
+def save_board():
+    data = request.get_json()
+    data_manager.add_new_board(data)
+    return "", 204
 
 
 def main():
