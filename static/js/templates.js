@@ -13,6 +13,13 @@ export let templates = {
         let boardHeader = templates.createBoardHeader(boardTitle);
         let newCardButton = templates.createNewCardButton();
         boardHeader.appendChild(newCardButton);
+        let titles = document.getElementsByClassName('board-title');
+        for (let title of titles){ // check if possible without iteration
+            title.addEventListener('click', function(){
+                let titleDiv = event.target;
+                titleDiv.contentEditable = true;
+            })
+        }
         newCardButton.addEventListener('click', function (event) {
             templates.handleNewCardButtonClick(event);
         });
@@ -29,7 +36,7 @@ export let templates = {
         let boardHeader = document.createElement("div");
         boardHeader.classList.add('board-header');
         boardHeader.innerHTML = `
-            <span class="board-title">${boardTitle}</span>
+            <div class="board-title">${boardTitle}</div>
             <i class="fas fa-caret-up"></i>
             `;
 
@@ -63,6 +70,10 @@ export let templates = {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.innerHTML = `${cardTitle}`;
+        cardElement.addEventListener('click', function(){
+           let card = event.target;
+           card.contentEditable = true;
+        });
         return cardElement;
     },
     createBoardBody: function (boardStatuses) {
