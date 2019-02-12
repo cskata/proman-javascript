@@ -20,7 +20,7 @@ def get_boards():
 def main():
     app.run(
         host='0.0.0.0',
-        port=8000,
+        port=8001,
         debug=True
     )
 

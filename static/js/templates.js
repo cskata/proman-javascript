@@ -76,6 +76,7 @@ export let templates = {
         tableBody.classList.add('cards');
         for(let i = 0; i < boardStatuses.length; i++){
             let cell = document.createElement('td');
+            cell.dataset.statusId = `${i + 1}`;
             tableBody.appendChild(cell);
         }
         return tableBody
