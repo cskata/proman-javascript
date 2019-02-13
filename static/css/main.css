@@ -135,6 +135,9 @@ button:hover {
     -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
     display: inline-block;
+    border: 1px solid #fff;
+    float: right;
+    top: 5px
 }
 
 #new-board-button::before {
