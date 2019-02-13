@@ -40,8 +40,16 @@ def save_card():
 @app.route("/delete-card", methods=["DELETE"])
 def delete_card():
     data = request.get_json()
-    id = data["card_id"]
-    data_manager.delete_card(id)
+    card_id = data["card_id"]
+    data_manager.delete_card(card_id)
+
+
+@app.route('/delete-board', methods=["DELETE"])
+def delete_board():
+    data = request.get_json()
+    board_id = data["board_id"]
+    print(board_id)
+    data_manager.delete_board(board_id)
 
 
 def main():

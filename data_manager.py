@@ -61,6 +61,15 @@ def delete_card(cursor, card_id):
                    {"card_id": card_id})
 
 
+@connection_handler
+def delete_board(cursor, board_id):
+    cursor.execute("""
+                    DELETE FROM boards
+                    WHERE id = %(board_id)s;
+                    """,
+                   {"board_id": board_id})
+
+
 def format_boards_with_cards(boards):
     for board in boards:
         board["cards"] = get_cards(board["id"])

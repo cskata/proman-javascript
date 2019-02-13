@@ -58,7 +58,8 @@ export let dom = {
             return column
         },
         toggleBoard: function (event) {
-            if (event.target.className !== 'new-card-button' && event.target.className !== 'board-title') {
+            if (event.target.className !== 'new-card-button' && event.target.className !== 'board-title' &&
+                event.target.className !== 'delete-board-button') {
                 let boardHeader;
                 if (event.target.className === 'fas fa-caret-up') {
                     boardHeader = event.target.parentElement;

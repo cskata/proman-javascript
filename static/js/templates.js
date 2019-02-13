@@ -2,7 +2,7 @@ import {dom} from "./dom.js";
 import {dataHandler} from "./data_handler.js";
 
 export let templates = {
-    createBoardElement: function (boardTitle, boardStatuses, boardId) {
+    createBoardElement: function(boardTitle, boardStatuses, boardId) {
 
         let fullContent = document.querySelector('#full-content');
 
@@ -13,8 +13,13 @@ export let templates = {
         let boardHeader = templates.createBoardHeader(boardTitle);
         let newCardButton = templates.createNewCardButton();
         boardHeader.appendChild(newCardButton);
-        newCardButton.addEventListener('click', function (event) {
+        newCardButton.addEventListener('click', function(event) {
             templates.handleNewCardButtonClick(event);
+        });
+        let deleteBoardButton = templates.createDeleteBoardButton();
+        boardHeader.appendChild(deleteBoardButton);
+        deleteBoardButton.addEventListener("click", function(event) {
+            templates.handleDeleteButtonClick(event);
         });
 
         let boardBody = templates.createBoardBody(boardStatuses);
@@ -25,7 +30,7 @@ export let templates = {
 
         fullContent.appendChild(board);
     },
-    createBoardHeader: function (boardTitle) {
+    createBoardHeader: function(boardTitle) {
         let boardHeader = document.createElement("div");
         boardHeader.classList.add('board-header');
         boardHeader.innerHTML = `
@@ -58,13 +63,19 @@ export let templates = {
         });
         return boardHeader
     },
-    createNewCardButton: function () {
+    createNewCardButton: function() {
         let newCardButton = document.createElement('button');
         newCardButton.classList.add('new-card-button');
         newCardButton.innerHTML = 'Add New Card';
         return newCardButton
     },
-    handleNewCardButtonClick: function (event) {
+    createDeleteBoardButton: function() {
+        let deleteBoardButton = document.createElement('button');
+        deleteBoardButton.classList.add('delete-board-button');
+        deleteBoardButton.innerHTML = 'Delete Board';
+        return deleteBoardButton
+    },
+    handleNewCardButtonClick: function(event) {
         let boardButton = event.currentTarget;
         let board = boardButton.parentNode.parentNode;
         let boardId = board.dataset.boardId;
@@ -76,7 +87,13 @@ export let templates = {
         fullContent.innerHTML = "";
         dataHandler.getBoards();
     },
-    createCardElement: function (cardTitle, cardId) {
+    handleDeleteButtonClick: function(event){
+        let deleteButton = event.currentTarget;
+        let board = deleteButton.parentNode.parentNode;
+        let boardId = board.dataset.boardId;
+        dataHandler.deleteBoard(boardId);
+    },
+    createCardElement: function(cardTitle, cardId) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.innerHTML = `<p>${cardTitle}</p>
@@ -115,7 +132,7 @@ export let templates = {
         });
         return cardElement;
     },
-    createBoardBody: function (boardStatuses) {
+    createBoardBody: function(boardStatuses) {
         let boardBody = document.createElement("div");
         boardBody.classList.add('board-body');
 
@@ -129,7 +146,7 @@ export let templates = {
         boardBody.appendChild(table);
         return boardBody
     },
-    createTableHeader: function (boardStatuses) {
+    createTableHeader: function(boardStatuses) {
         let tableHeader = document.createElement('tr');
         tableHeader.classList.add('statuses');
         for (const status of boardStatuses) {
@@ -156,7 +173,7 @@ export let templates = {
         }
         return tableHeader
     },
-    createTableBody: function (boardStatuses) {
+    createTableBody: function(boardStatuses) {
         let tableBody = document.createElement('tr');
         tableBody.classList.add('cards');
         for (let i = 0; i < boardStatuses.length; i++) {
