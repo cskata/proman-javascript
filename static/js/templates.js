@@ -45,10 +45,10 @@ export let templates = {
         let title = boardHeader.querySelector('.board-title');
         title.dataset.boardTitle = title.innerHTML;
 
-        title.addEventListener('click', function () {
+        title.addEventListener('click', function() {
             title.setAttribute('contentEditable', 'true');
         });
-        title.addEventListener('keydown', function () {
+        title.addEventListener('keydown', function(event) {
             let enterKey = 13;
             let escKey = 27;
             if (event.which === enterKey) {
