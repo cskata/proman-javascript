@@ -24,6 +24,10 @@ export let templates = {
 
         let boardBody = templates.createBoardBody(boardStatuses, boardId);
 
+        let classNames = boardBody.getElementsByTagName('td');
+        let dragSelector = Array.from(classNames);
+        dragula(dragSelector);
+
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
         board.appendChild(boardBody);
@@ -117,7 +121,7 @@ export let templates = {
             }
             if (event.which === escKey) {
                 card.contentEditable = false;
-                cardElement.innerHTML = cardElement.dataset.cardTitle;
+                firstPara.innerHTML = cardElement.dataset.cardTitle;
             }
         });
         cardElement.dataset.cardId = cardId;
