@@ -70,15 +70,16 @@ export let templates = {
         let boardButton = event.currentTarget;
         let board = boardButton.parentNode.parentNode;
         let boardId = board.dataset.boardId;
-        dataHandler.saveNewCard(boardId);
-        let newCard = templates.createCardElement('Test Card');
+        let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .cards > :first-child`);
+        const orderNumber = (firstColumn.children.length) + 1;
+        dataHandler.saveNewCard(boardId, orderNumber);
 
+        let newCard = templates.createCardElement('New Card');
         let boardBody = document.querySelector(`.board[data-board-id="${boardId}"] .board-body`);
         boardBody.style.height = 'auto';
         let boardHeader = document.querySelector(`.board[data-board-id="${boardId}"] .board-header`);
-        boardHeader.dataset.heightChecked = 'false';
 
-        let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .cards > :first-child`);
+        boardHeader.dataset.heightChecked = 'false';
         firstColumn.appendChild(newCard);
     },
     createCardElement: function (cardTitle) {

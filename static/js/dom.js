@@ -70,11 +70,12 @@ export let dom = {
                 const arrow = boardHeader.querySelector('.fas');
                 const newCardButton = boardHeader.querySelector('.new-card-button');
 
-                let tableHeightChecked = boardHeader.dataset.heightChecked;
-                let isTableOpen = boardHeader.dataset.tableIsOpen;
-                let initHeight = boardHeader.dataset.initHeight;
+                const tableHeightChecked = boardHeader.dataset.heightChecked;
+                const isTableOpen = boardHeader.dataset.tableIsOpen;
+                const initHeight = boardHeader.dataset.initHeight;
 
                 if (tableHeightChecked === 'false') {
+                    tableContainer.style.height = `${tableContainer.offsetHeight}px`;
                     boardHeader.dataset.initHeight = `${tableContainer.offsetHeight}`;
                     boardHeader.dataset.heightChecked = 'true';
                 }
@@ -82,17 +83,17 @@ export let dom = {
                 if (isTableOpen === 'true') {
                     boardHeader.dataset.tableIsOpen = 'false';
                     tableContainer.style.height = '0px';
-                    arrow.style.transform = "translate(0, 25%) rotateX(180deg)";
-                    table.style.display = "none";
-                    newCardButton.style.visibility = "hidden";
+                    arrow.style.transform = 'translate(0, 25%) rotateX(180deg)';
+                    table.style.display = 'none';
+                    newCardButton.style.visibility = 'hidden';
                 } else {
                     boardHeader.dataset.tableIsOpen = 'true';
                     tableContainer.style.height = `${initHeight}px`;
-                    arrow.style.transform = "rotateX(0deg)";
+                    arrow.style.transform = 'rotateX(0deg)';
 
                     setTimeout(function () {
-                        table.style.display = "table";
-                        newCardButton.style.visibility = "visible";
+                        table.style.display = 'table';
+                        newCardButton.style.visibility = 'visible';
                     }, 600);
                 }
             }

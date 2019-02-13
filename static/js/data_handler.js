@@ -64,9 +64,9 @@ export let dataHandler = {
         })
         .then(response => console.log('Success:', JSON.stringify(response)))
     },
-    saveNewCard: function(board_id) {
+    saveNewCard: function(boardId, orderNumber) {
         let url = '/save-card';
-        let data = {title: "New Card", board_id: board_id, status_id: 1, order_num: 1};
+        let data = {title: "New Card", board_id: boardId, status_id: 1, order_num: orderNumber};
 
         fetch(url, {
           method: 'POST',
