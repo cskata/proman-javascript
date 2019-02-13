@@ -14,12 +14,7 @@ export let templates = {
         let newCardButton = templates.createNewCardButton();
         boardHeader.appendChild(newCardButton);
         let titles = document.getElementsByClassName('board-title');
-        for (let title of titles){ // check if possible without iteration
-            title.addEventListener('click', function(){
-                let titleDiv = event.target;
-                titleDiv.contentEditable = true;
-            })
-        }
+
         newCardButton.addEventListener('click', function (event) {
             templates.handleNewCardButtonClick(event);
         });
@@ -43,6 +38,26 @@ export let templates = {
         boardHeader.dataset.tableIsOpen = 'true';
         boardHeader.dataset.heightChecked = 'false';
         boardHeader.dataset.initHeight = '0';
+
+        let title = boardHeader.querySelector('.board-title');
+        title.dataset.boardTitle = title.innerHTML;
+
+        title.addEventListener('click', function () {
+            title.setAttribute('contentEditable', 'true');
+        });
+        title.addEventListener('keydown', function () {
+            let enterKey = 13;
+            let escKey = 27;
+            if (event.which === enterKey) {
+                title.setAttribute('contentEditable', 'false');
+                title.dataset.boardTitle = title.innerHTML;
+                // this where the SQL magic comes
+            }
+            if (event.which === escKey) {
+                title.setAttribute('contentEditable', 'false');
+                title.innerHTML = title.dataset.boardTitle;
+            }
+        });
         return boardHeader
     },
     createNewCardButton: function () {
@@ -51,7 +66,7 @@ export let templates = {
         newCardButton.innerHTML = 'Add New Card';
         return newCardButton
     },
-    handleNewCardButtonClick: function(event){
+    handleNewCardButtonClick: function (event) {
         let boardButton = event.currentTarget;
         let board = boardButton.parentNode.parentNode;
         let boardId = board.dataset.boardId;
@@ -70,9 +85,26 @@ export let templates = {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.innerHTML = `${cardTitle}`;
-        cardElement.addEventListener('click', function(){
-           let card = event.target;
-           card.contentEditable = true;
+
+        cardElement.dataset.cardTitle = cardElement.innerHTML;
+
+        cardElement.addEventListener('click', function () {
+            let card = event.target;
+            card.contentEditable = true;
+        });
+
+        cardElement.addEventListener('keydown', function (event) {
+            const enterKey = 13;
+            const escKey = 27;
+            let card = event.target;
+            if (event.which === enterKey) {
+                card.contentEditable = false;
+                cardElement.dataset.cardTitle = cardElement.innerHTML;
+            }
+            if (event.which === escKey) {
+                card.contentEditable = false;
+                cardElement.innerHTML = cardElement.dataset.cardTitle;
+            }
         });
         return cardElement;
     },
