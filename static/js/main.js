@@ -13,7 +13,6 @@ function init() {
         dataHandler.createNewBoard();
     });
 
-
 }
 
 window.onload = init;

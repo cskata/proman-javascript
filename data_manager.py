@@ -52,6 +52,15 @@ def add_new_card(cursor, new_card):
                 "status_id": new_card["status_id"], "order_num": new_card["order_num"]})
 
 
+@connection_handler
+def delete_card(cursor, card_id):
+    cursor.execute("""
+                    DELETE FROM cards
+                    WHERE id = %(card_id)s;
+                   """,
+                   {"card_id": card_id})
+
+
 def format_boards_with_cards(boards):
     for board in boards:
         board["cards"] = get_cards(board["id"])

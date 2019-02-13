@@ -22,7 +22,7 @@ export let dom = {
             let cards = board.cards;
             for (let i = 0; i < cards.length; i++) {
                 let column = dom.addCard(board, cards[i]);
-                let cardElement = templates.createCardElement(cards[i].title);
+                let cardElement = templates.createCardElement(cards[i].title, cards[i].id);
                 column.appendChild(cardElement);
             }
         },
@@ -58,7 +58,7 @@ export let dom = {
             return column
         },
         toggleBoard: function (event) {
-            if (event.target.className != 'new-card-button' && event.target.className != 'board-title') {
+            if (event.target.className !== 'new-card-button' && event.target.className !== 'board-title') {
                 let boardHeader;
                 if (event.target.className === 'fas fa-caret-up') {
                     boardHeader = event.target.parentElement;
