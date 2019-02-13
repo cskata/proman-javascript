@@ -121,7 +121,7 @@ export let templates = {
             }
             if (event.which === escKey) {
                 card.contentEditable = false;
-                cardElement.innerHTML = cardElement.dataset.cardTitle;
+                firstPara.innerHTML = cardElement.dataset.cardTitle;
             }
         });
         cardElement.dataset.cardId = cardId;
