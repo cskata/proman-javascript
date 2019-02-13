@@ -92,6 +92,7 @@ nav span {
     margin: 10px auto;
     padding: 10px;
     border: 1px dotted black;
+    background-color: rgba(215, 240, 244, 0.9);
 }
 
 .card p {
@@ -106,7 +107,8 @@ nav span {
 
 .fa-trash-alt {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 30px;
+    color: rgb(8, 76, 102);
 }
 
 button {
@@ -149,7 +151,7 @@ button:hover {
     bottom: 0;
     left: 0;
     right: 0;
-    background: steelblue;
+    background: rgb(26, 136, 153);
     -webkit-transform: scale(0);
     transform: scale(0);
     -webkit-transition-property: transform;

@@ -89,12 +89,19 @@ export let dom = {
                     table.style.display = 'none';
                     newCardButton.style.visibility = 'hidden';
                     deleteBoardButton.style.visibility = 'hidden';
+
+                    setTimeout( function() {
+                        boardHeader.style.borderBottomLeftRadius = "10px";
+                        boardHeader.style.borderBottomRightRadius = "10px";
+                    }, 600);
                 } else {
                     boardHeader.dataset.tableIsOpen = 'true';
                     tableContainer.style.height = `${initHeight}px`;
                     arrow.style.transform = 'rotateX(0deg)';
+                    boardHeader.style.borderBottomLeftRadius = "0";
+                    boardHeader.style.borderBottomRightRadius = "0";
 
-                    setTimeout(function () {
+                    setTimeout(function() {
                         table.style.display = 'table';
                         newCardButton.style.visibility = 'visible';
                         deleteBoardButton.style.visibility = 'visible';
