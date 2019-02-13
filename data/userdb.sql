@@ -50,33 +50,3 @@ ALTER TABLE ONLY cards
 
 ALTER TABLE ONLY cards
   ADD CONSTRAINT status_id_fkey FOREIGN KEY (status_id) REFERENCES statuses (id);
-
-
-INSERT INTO statuses
-VALUES (1, 'New');
-INSERT INTO statuses
-VALUES (2, 'In progress');
-INSERT INTO statuses
-VALUES (3, 'Testing');
-INSERT INTO statuses
-VALUES (4, 'Done');
-
-
-INSERT INTO boards
-VALUES (1, 'Test Board 1', 'New, In Progress, Testing, Done');
-INSERT INTO boards
-VALUES (2, 'Test Board 2', 'New, In Progress, Testing, Done');
-
-
-INSERT INTO cards
-VALUES (1, 'task1', 1, 1, 1);
-INSERT INTO cards
-VALUES (2, 'task1', 1, 2, 1);
-INSERT INTO cards
-VALUES (3, 'task1', 1, 4, 1);
-INSERT INTO cards
-VALUES (4, 'task1', 2, 1, 1);
-INSERT INTO cards
-VALUES (5, 'task1', 2, 2, 1);
-INSERT INTO cards
-VALUES (6, 'task1', 2, 3, 1);
