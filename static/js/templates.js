@@ -17,7 +17,7 @@ export let templates = {
             templates.handleNewCardButtonClick(event);
         });
 
-        let boardBody = templates.createBoardBody(boardStatuses);
+        let boardBody = templates.createBoardBody(boardStatuses, boardId);
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
@@ -122,14 +122,14 @@ export let templates = {
         });
         return cardElement;
     },
-    createBoardBody: function (boardStatuses) {
+    createBoardBody: function (boardStatuses, boardId) {
         let boardBody = document.createElement("div");
         boardBody.classList.add('board-body');
 
         let table = document.createElement('table');
         table.classList.add('board-data');
         let tableHeader = templates.createTableHeader(boardStatuses);
-        let tableBody = templates.createTableBody(boardStatuses);
+        let tableBody = templates.createTableBody(boardStatuses, boardId);
         table.appendChild(tableHeader);
         table.appendChild(tableBody);
 
@@ -163,13 +163,27 @@ export let templates = {
         }
         return tableHeader
     },
-    createTableBody: function (boardStatuses) {
+    createTableBody: function (boardStatuses, boardId) {
         let tableBody = document.createElement('tr');
         tableBody.classList.add('cards');
         for (let i = 0; i < boardStatuses.length; i++) {
             let cell = document.createElement('td');
+            cell.setAttribute("class", boardId);
             tableBody.appendChild(cell);
         }
+        drag(boardId);
+
+
         return tableBody
     }
 };
+
+
+function drag(boardId){
+    let bazd = boardId.toString();
+    console.log(typeof bazd);
+    let containers = document.getElementsByClassName(`${bazd}`);
+    let containersArray = Array.from(containers);
+    dragula(containersArray);
+}
+
