@@ -52,7 +52,7 @@ export let dataHandler = {
         // creates new card, saves it and calls the callback function with its data
     },
     saveNewBoard: function() {
-        let url = '/save-board';
+        let url = '/boards';
         let data = {title: "New Board", statuses: "New, In Progress, Testing, Done"};
 
         fetch(url, {
@@ -62,10 +62,15 @@ export let dataHandler = {
             'Content-Type': 'application/json'
           }
         })
-        .then(response => console.log('Success:', JSON.stringify(response)))
+        .then(response => {
+            console.log('Success:', JSON.stringify(response));
+            let fullContent = document.querySelector("#full-content");
+            fullContent.innerHTML = "";
+            dataHandler.getBoards();
+        })
     },
     saveNewCard: function(boardId, orderNumber) {
-        let url = '/save-card';
+        let url = '/cards';
         let data = {title: "New Card", board_id: boardId, status_id: 1, order_num: orderNumber};
 
         fetch(url, {
@@ -78,8 +83,7 @@ export let dataHandler = {
         .then(response => console.log('Success:', JSON.stringify(response)))
     },
     deleteCard: function(clickedCardId){
-        console.log(clickedCardId);
-        let url = '/delete-card';
+        let url = '/cards';
         let data = {card_id: clickedCardId};
 
         fetch(url, {
@@ -95,5 +99,68 @@ export let dataHandler = {
             fullContent.innerHTML = "";
             dataHandler.getBoards();
         });
+    },
+    deleteBoard: function(board_id){
+        let url = '/boards';
+        let data = {board_id: board_id};
+
+        fetch(url, {
+          method: 'DELETE',
+          body: JSON.stringify(data),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+            console.log('Success:', JSON.stringify(response));
+            let fullContent = document.querySelector("#full-content");
+            fullContent.innerHTML = "";
+            dataHandler.getBoards();
+        });
+    },
+    updateBoard: function(board_id, new_title){
+        let url = '/boards';
+        let data = {id: board_id, new_title: new_title};
+
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+        console.log('Success:', JSON.stringify(response));
+        });
+    },
+    updateCard: function(card_id, new_title){
+        let url = '/cards';
+        let data = {id: card_id, new_title: new_title};
+
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response =>{
+        console.log('Success:', JSON.stringify(response));
+        });
+    },
+    updateStatuses: function(statuses, id) {
+        let url = '/statuses';
+        let data = {statuses: statuses, id: id};
+
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                console.log('Success:', JSON.stringify(response));
+            });
     }
 };

@@ -10,7 +10,6 @@ function init() {
     const addNewBoard = document.querySelector('#new-board-button');
     addNewBoard.addEventListener('click', function(){
         dataHandler.saveNewBoard();
-        dataHandler.createNewBoard();
     });
 
 }

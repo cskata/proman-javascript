@@ -2,7 +2,7 @@ import {dom} from "./dom.js";
 import {dataHandler} from "./data_handler.js";
 
 export let templates = {
-    createBoardElement: function (boardTitle, boardStatuses, boardId) {
+    createBoardElement: function(boardTitle, boardStatuses, boardId) {
 
         let fullContent = document.querySelector('#full-content');
 
@@ -10,11 +10,16 @@ export let templates = {
         board.classList.add('board');
         board.dataset.boardId = boardId;
 
-        let boardHeader = templates.createBoardHeader(boardTitle);
+        let boardHeader = templates.createBoardHeader(boardTitle, boardId);
         let newCardButton = templates.createNewCardButton();
         boardHeader.appendChild(newCardButton);
-        newCardButton.addEventListener('click', function (event) {
+        newCardButton.addEventListener('click', function(event) {
             templates.handleNewCardButtonClick(event);
+        });
+        let deleteBoardButton = templates.createDeleteBoardButton();
+        boardHeader.appendChild(deleteBoardButton);
+        deleteBoardButton.addEventListener("click", function(event) {
+            templates.handleDeleteButtonClick(event);
         });
 
         let boardBody = templates.createBoardBody(boardStatuses, boardId);
@@ -22,6 +27,7 @@ export let templates = {
         let classNames = boardBody.getElementsByTagName('td');
         let dragSelector = Array.from(classNames);
         dragula(dragSelector);
+        let boardBody = templates.createBoardBody(boardStatuses, boardId);
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
@@ -29,7 +35,7 @@ export let templates = {
 
         fullContent.appendChild(board);
     },
-    createBoardHeader: function (boardTitle) {
+    createBoardHeader: function (boardTitle, boardId) {
         let boardHeader = document.createElement("div");
         boardHeader.classList.add('board-header');
         boardHeader.innerHTML = `
@@ -44,16 +50,16 @@ export let templates = {
         let title = boardHeader.querySelector('.board-title');
         title.dataset.boardTitle = title.innerHTML;
 
-        title.addEventListener('click', function () {
+        title.addEventListener('click', function() {
             title.setAttribute('contentEditable', 'true');
         });
-        title.addEventListener('keydown', function () {
+        title.addEventListener('keydown', function(event) {
             let enterKey = 13;
             let escKey = 27;
             if (event.which === enterKey) {
                 title.setAttribute('contentEditable', 'false');
                 title.dataset.boardTitle = title.innerHTML;
-                // this where the SQL magic comes
+                dataHandler.updateBoard(boardId, title.dataset.boardTitle);
             }
             if (event.which === escKey) {
                 title.setAttribute('contentEditable', 'false');
@@ -62,13 +68,19 @@ export let templates = {
         });
         return boardHeader
     },
-    createNewCardButton: function () {
+    createNewCardButton: function() {
         let newCardButton = document.createElement('button');
         newCardButton.classList.add('new-card-button');
         newCardButton.innerHTML = 'Add New Card';
         return newCardButton
     },
-    handleNewCardButtonClick: function (event) {
+    createDeleteBoardButton: function() {
+        let deleteBoardButton = document.createElement('button');
+        deleteBoardButton.classList.add('delete-board-button');
+        deleteBoardButton.innerHTML = 'Delete Board';
+        return deleteBoardButton
+    },
+    handleNewCardButtonClick: function(event) {
         let boardButton = event.currentTarget;
         let board = boardButton.parentNode.parentNode;
         let boardId = board.dataset.boardId;
@@ -76,37 +88,37 @@ export let templates = {
         const orderNumber = (firstColumn.children.length) + 1;
         dataHandler.saveNewCard(boardId, orderNumber);
 
-        /*let newCard = templates.createCardElement('New Card');
-        let boardBody = document.querySelector(`.board[data-board-id="${boardId}"] .board-body`);
-        boardBody.style.height = 'auto';
-        let boardHeader = document.querySelector(`.board[data-board-id="${boardId}"] .board-header`);
-
-        boardHeader.dataset.heightChecked = 'false';
-        firstColumn.appendChild(newCard);*/
         let fullContent = document.querySelector("#full-content");
         fullContent.innerHTML = "";
         dataHandler.getBoards();
     },
-    createCardElement: function (cardTitle, cardId) {
+    handleDeleteButtonClick: function(event){
+        let deleteButton = event.currentTarget;
+        let board = deleteButton.parentNode.parentNode;
+        let boardId = board.dataset.boardId;
+        dataHandler.deleteBoard(boardId);
+    },
+    createCardElement: function(cardTitle, cardId) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
-        cardElement.innerHTML = `${cardTitle}`;
+        cardElement.innerHTML = `<p>${cardTitle}</p>
+                                 <p><i class="fas fa-trash-alt"></i></p>`;
 
-        cardElement.dataset.cardTitle = cardElement.innerHTML;
-
-        cardElement.addEventListener('click', function () {
+        let firstPara = cardElement.querySelector("p:first-child");
+        cardElement.dataset.cardTitle = firstPara.innerHTML;
+        firstPara.addEventListener('click', function(event) {
             let card = event.target;
             card.contentEditable = true;
         });
 
-        cardElement.addEventListener('keydown', function (event) {
+        cardElement.addEventListener('keydown', function(event) {
             const enterKey = 13;
             const escKey = 27;
             let card = event.target;
             if (event.which === enterKey) {
                 card.contentEditable = false;
-                cardElement.dataset.cardTitle = cardElement.innerHTML;
-                // here comes the SQL magic
+                cardElement.dataset.cardTitle = firstPara.innerHTML;
+                dataHandler.updateCard(cardId, cardElement.dataset.cardTitle);
             }
             if (event.which === escKey) {
                 card.contentEditable = false;
@@ -114,8 +126,7 @@ export let templates = {
             }
         });
         cardElement.dataset.cardId = cardId;
-        cardElement.innerHTML = `<p>${cardTitle}</p>
-                                 <p><i class="fas fa-trash-alt"></i></p>`;
+
         let trash = cardElement.querySelector(".fa-trash-alt");
         trash.addEventListener("click", function(event) {
            let clickedTrash = event.target;
@@ -132,15 +143,15 @@ export let templates = {
 
         let table = document.createElement('table');
         table.classList.add('board-data');
-        let tableHeader = templates.createTableHeader(boardStatuses);
-        let tableBody = templates.createTableBody(boardStatuses, boardId);
+        let tableHeader = templates.createTableHeader(boardStatuses, boardId);
+        let tableBody = templates.createTableBody(boardStatuses);
         table.appendChild(tableHeader);
         table.appendChild(tableBody);
 
         boardBody.appendChild(table);
         return boardBody
     },
-    createTableHeader: function (boardStatuses) {
+    createTableHeader: function (boardStatuses, boardId) {
         let tableHeader = document.createElement('tr');
         tableHeader.classList.add('statuses');
         for (const status of boardStatuses) {
@@ -154,9 +165,12 @@ export let templates = {
                 const enterKey = 13;
                 const escKey = 27;
                 if (event.which === enterKey){
+                    let cellId = boardStatuses.indexOf(cell.dataset.cellTitle);
                     cell.setAttribute('contentEditable', 'false');
                     cell.dataset.cellTitle = cell.innerHTML;
-                    // here comes the SQL magic
+                    boardStatuses[cellId] = cell.dataset.cellTitle;
+                    let newStatuses = boardStatuses.toString();
+                    dataHandler.updateStatuses(newStatuses, boardId);
                 }
                 if (event.which === escKey){
                     cell.setAttribute('contentEditable', 'false');
@@ -167,16 +181,13 @@ export let templates = {
         }
         return tableHeader
     },
-    createTableBody: function (boardStatuses, boardId) {
+    createTableBody: function(boardStatuses) {
         let tableBody = document.createElement('tr');
         tableBody.classList.add('cards');
-        let classId = 'board' + boardId;
         for (let i = 0; i < boardStatuses.length; i++) {
             let cell = document.createElement('td');
-            cell.setAttribute("class", classId);
             tableBody.appendChild(cell);
         }
-
         return tableBody
     }
 };

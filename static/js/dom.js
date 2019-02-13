@@ -58,7 +58,8 @@ export let dom = {
             return column
         },
         toggleBoard: function (event) {
-            if (event.target.className !== 'new-card-button' && event.target.className !== 'board-title') {
+            if (event.target.className !== 'new-card-button' && event.target.className !== 'board-title' &&
+                event.target.className !== 'delete-board-button') {
                 let boardHeader;
                 if (event.target.className === 'fas fa-caret-up') {
                     boardHeader = event.target.parentElement;
@@ -69,6 +70,7 @@ export let dom = {
                 const table = tableContainer.querySelector('.board-data');
                 const arrow = boardHeader.querySelector('.fas');
                 const newCardButton = boardHeader.querySelector('.new-card-button');
+                const deleteBoardButton = boardHeader.querySelector(".delete-board-button");
 
                 const tableHeightChecked = boardHeader.dataset.heightChecked;
                 const isTableOpen = boardHeader.dataset.tableIsOpen;
@@ -86,6 +88,7 @@ export let dom = {
                     arrow.style.transform = 'translate(0, 25%) rotateX(180deg)';
                     table.style.display = 'none';
                     newCardButton.style.visibility = 'hidden';
+                    deleteBoardButton.style.visibility = 'hidden';
                 } else {
                     boardHeader.dataset.tableIsOpen = 'true';
                     tableContainer.style.height = `${initHeight}px`;
@@ -94,6 +97,7 @@ export let dom = {
                     setTimeout(function () {
                         table.style.display = 'table';
                         newCardButton.style.visibility = 'visible';
+                        deleteBoardButton.style.visibility = 'visible';
                     }, 600);
                 }
             }

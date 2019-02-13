@@ -7,14 +7,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def route_index():
-    ''' this is a one-pager which shows all the boards and cards '''
     return render_template('boards.html')
-
-
-@app.route("/max-id", methods=['GET'])
-def get_max_id():
-    ids = {"board_id": data_manager.get_last_id("boards"), "card_id": data_manager.get_last_id("cards")}
-    return jsonify(ids)
 
 
 @app.route("/boards", methods=['GET'])
@@ -23,25 +16,61 @@ def get_boards():
     return jsonify(boards)
 
 
-@app.route("/save-board", methods=['POST'])
+@app.route("/boards", methods=['POST'])
 def save_board():
     data = request.get_json()
     data_manager.add_new_board(data)
     return "", 204
 
 
-@app.route("/save-card", methods=["POST"])
+@app.route('/boards', methods=["PUT"])
+def update_board_title():
+    data = request.get_json()
+    board_id = data['id']
+    new_title = data['new_title']
+    data_manager.update_board_title(board_id, new_title)
+    return "", 204
+
+
+@app.route('/boards', methods=["DELETE"])
+def delete_board():
+    data = request.get_json()
+    board_id = data["board_id"]
+    data_manager.delete_board(board_id)
+    return "", 204
+
+
+@app.route("/cards", methods=["POST"])
 def save_card():
     data = request.get_json()
     data_manager.add_new_card(data)
     return "", 204
 
 
-@app.route("/delete-card", methods=["DELETE"])
+@app.route('/cards', methods=["PUT"])
+def update_card_title():
+    data = request.get_json()
+    card_id = data['id']
+    new_title = data['new_title']
+    data_manager.update_card_title(card_id, new_title)
+    return "", 204
+
+
+@app.route("/cards", methods=["DELETE"])
 def delete_card():
     data = request.get_json()
-    id = data["card_id"]
-    data_manager.delete_card(id)
+    card_id = data["card_id"]
+    data_manager.delete_card(card_id)
+    return "", 204
+
+
+@app.route('/statuses', methods=["PUT"])
+def update_statuses():
+    data = request.get_json()
+    statuses = data['statuses']
+    board_id = data['id']
+    data_manager.update_statuses(statuses, board_id)
+    return "", 204
 
 
 def main():
