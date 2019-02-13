@@ -10,7 +10,7 @@ export let templates = {
         board.classList.add('board');
         board.dataset.boardId = boardId;
 
-        let boardHeader = templates.createBoardHeader(boardTitle);
+        let boardHeader = templates.createBoardHeader(boardTitle, boardId);
         let newCardButton = templates.createNewCardButton();
         boardHeader.appendChild(newCardButton);
         newCardButton.addEventListener('click', function(event) {
@@ -22,7 +22,7 @@ export let templates = {
             templates.handleDeleteButtonClick(event);
         });
 
-        let boardBody = templates.createBoardBody(boardStatuses);
+        let boardBody = templates.createBoardBody(boardStatuses, boardId);
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
@@ -30,7 +30,7 @@ export let templates = {
 
         fullContent.appendChild(board);
     },
-    createBoardHeader: function(boardTitle) {
+    createBoardHeader: function (boardTitle, boardId) {
         let boardHeader = document.createElement("div");
         boardHeader.classList.add('board-header');
         boardHeader.innerHTML = `
@@ -54,7 +54,7 @@ export let templates = {
             if (event.which === enterKey) {
                 title.setAttribute('contentEditable', 'false');
                 title.dataset.boardTitle = title.innerHTML;
-                // this where the SQL magic comes
+                dataHandler.updateBoard(boardId, title.dataset.boardTitle);
             }
             if (event.which === escKey) {
                 title.setAttribute('contentEditable', 'false');
@@ -112,8 +112,8 @@ export let templates = {
             let card = event.target;
             if (event.which === enterKey) {
                 card.contentEditable = false;
-                cardElement.dataset.cardTitle = cardElement.innerHTML;
-                // here comes the SQL magic
+                cardElement.dataset.cardTitle = firstPara.innerHTML;
+                dataHandler.updateCard(cardId, cardElement.dataset.cardTitle);
             }
             if (event.which === escKey) {
                 card.contentEditable = false;
@@ -132,13 +132,13 @@ export let templates = {
         });
         return cardElement;
     },
-    createBoardBody: function(boardStatuses) {
+    createBoardBody: function (boardStatuses, boardId) {
         let boardBody = document.createElement("div");
         boardBody.classList.add('board-body');
 
         let table = document.createElement('table');
         table.classList.add('board-data');
-        let tableHeader = templates.createTableHeader(boardStatuses);
+        let tableHeader = templates.createTableHeader(boardStatuses, boardId);
         let tableBody = templates.createTableBody(boardStatuses);
         table.appendChild(tableHeader);
         table.appendChild(tableBody);
@@ -146,7 +146,7 @@ export let templates = {
         boardBody.appendChild(table);
         return boardBody
     },
-    createTableHeader: function(boardStatuses) {
+    createTableHeader: function (boardStatuses, boardId) {
         let tableHeader = document.createElement('tr');
         tableHeader.classList.add('statuses');
         for (const status of boardStatuses) {
@@ -160,9 +160,12 @@ export let templates = {
                 const enterKey = 13;
                 const escKey = 27;
                 if (event.which === enterKey){
+                    let cellId = boardStatuses.indexOf(cell.dataset.cellTitle);
                     cell.setAttribute('contentEditable', 'false');
                     cell.dataset.cellTitle = cell.innerHTML;
-                    // here comes the SQL magic
+                    boardStatuses[cellId] = cell.dataset.cellTitle;
+                    let newStatuses = boardStatuses.toString();
+                    dataHandler.updateStatuses(newStatuses, boardId);
                 }
                 if (event.which === escKey){
                     cell.setAttribute('contentEditable', 'false');

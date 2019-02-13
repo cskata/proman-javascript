@@ -53,6 +53,33 @@ def delete_board():
     return "", 204
 
 
+@app.route('/update-board-title', methods=["PUT"])
+def update_board_title():
+    data = request.get_json()
+    board_id = data['id']
+    new_title = data['new_title']
+    data_manager.update_board_title(board_id, new_title)
+    return "", 204
+
+
+@app.route('/update-card-title', methods=["PUT"])
+def update_card_title():
+    data = request.get_json()
+    card_id = data['id']
+    new_title = data['new_title']
+    data_manager.update_card_title(card_id, new_title)
+    return "", 204
+
+
+@app.route('/update-statuses', methods=["PUT"])
+def update_statuses():
+    data = request.get_json()
+    statuses = data['statuses']
+    board_id = data['id']
+    data_manager.update_statuses(statuses, board_id)
+    return "", 204
+
+
 def main():
     app.run(
         host='0.0.0.0',
