@@ -62,6 +62,32 @@ def delete_card(cursor, card_id):
 
 
 @connection_handler
+def update_board_title(cursor, id, new_title):
+    cursor.execute("""
+                    UPDATE boards
+                    SET title = %(new_title)s WHERE id = %(id)s;
+                    """,
+                   {'new_title': new_title, 'id': id})
+
+
+@connection_handler
+def update_card_title(cursor, id, new_title):
+    cursor.execute("""
+                    UPDATE cards
+                    SET title = %(new_title)s WHERE id = %(id)s;
+                    """,
+                   {'new_title': new_title, 'id': id})
+
+@connection_handler
+def update_statuses(cursor, statuses, id):
+    cursor.execute("""
+                    UPDATE boards
+                    SET statuses = %(statuses)s WHERE id = %(id)s
+                    """,
+                   {'statuses': statuses, 'id': id})
+
+
+@connection_handler
 def delete_board(cursor, board_id):
     cursor.execute("""
                         DELETE FROM cards

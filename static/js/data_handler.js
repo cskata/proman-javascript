@@ -117,5 +117,53 @@ export let dataHandler = {
             fullContent.innerHTML = "";
             dataHandler.getBoards();
         });
+    },
+    updateBoard: function(board_id, new_title){
+        console.log(board_id);
+        console.log(new_title);
+        let url = '/update-board-title';
+        let data = {id: board_id, new_title: new_title};
+
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+        console.log('Success:', JSON.stringify(response));
+        });
+    },
+    updateCard: function(card_id, new_title){
+        let url = '/update-card-title';
+        let data = {id: card_id, new_title: new_title};
+
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response =>{
+        console.log('Success:', JSON.stringify(response));
+        });
+    },
+    updateStatuses: function(statuses, id) {
+        let url = '/update-statuses';
+        let data = {statuses: statuses, id: id};
+        console.log(data);
+
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                console.log('Success:', JSON.stringify(response));
+            });
     }
 };
