@@ -61,6 +61,24 @@ def delete_card(cursor, card_id):
                    {"card_id": card_id})
 
 
+@connection_handler
+def update_board_title(cursor, id, new_title):
+    cursor.execute("""
+                    UPDATE boards
+                    SET title = %(new_title)s WHERE id = %(id)s;
+                    """,
+                   {'new_title': new_title, 'id': id})
+
+
+@connection_handler
+def update_card_title(cursor, id, new_title):
+    cursor.execute("""
+                    UPDATE cards
+                    SET title = %(new_title)s WHERE id = %(id)s;
+                    """,
+                   {'new_title': new_title, 'id': id})
+
+
 def format_boards_with_cards(boards):
     for board in boards:
         board["cards"] = get_cards(board["id"])

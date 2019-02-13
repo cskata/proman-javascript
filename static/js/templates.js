@@ -10,7 +10,7 @@ export let templates = {
         board.classList.add('board');
         board.dataset.boardId = boardId;
 
-        let boardHeader = templates.createBoardHeader(boardTitle);
+        let boardHeader = templates.createBoardHeader(boardTitle, boardId);
         let newCardButton = templates.createNewCardButton();
         boardHeader.appendChild(newCardButton);
         newCardButton.addEventListener('click', function (event) {
@@ -25,7 +25,7 @@ export let templates = {
 
         fullContent.appendChild(board);
     },
-    createBoardHeader: function (boardTitle) {
+    createBoardHeader: function (boardTitle, boardId) {
         let boardHeader = document.createElement("div");
         boardHeader.classList.add('board-header');
         boardHeader.innerHTML = `
@@ -49,7 +49,7 @@ export let templates = {
             if (event.which === enterKey) {
                 title.setAttribute('contentEditable', 'false');
                 title.dataset.boardTitle = title.innerHTML;
-                // this where the SQL magic comes
+                dataHandler.updateBoard(boardId, title.dataset.boardTitle);
             }
             if (event.which === escKey) {
                 title.setAttribute('contentEditable', 'false');
@@ -86,15 +86,16 @@ export let templates = {
     createCardElement: function (cardTitle, cardId) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
-        cardElement.innerHTML = `${cardTitle}`;
+        cardElement.innerHTML = `<p>${cardTitle}</p>
+                                 <p><i class="fas fa-trash-alt"></i></p>`;
 
-        cardElement.dataset.cardTitle = cardElement.innerHTML;
+        let firstPara = cardElement.querySelector("p:first-child");
+        cardElement.dataset.cardTitle = firstPara.innerHTML;
 
-        cardElement.addEventListener('click', function () {
+        firstPara.addEventListener('click', function () {
             let card = event.target;
             card.contentEditable = true;
         });
-
         cardElement.addEventListener('keydown', function (event) {
             const enterKey = 13;
             const escKey = 27;
@@ -102,7 +103,7 @@ export let templates = {
             if (event.which === enterKey) {
                 card.contentEditable = false;
                 cardElement.dataset.cardTitle = cardElement.innerHTML;
-                // here comes the SQL magic
+                dataHandler.updateCard(cardId, cardElement.dataset.cardTitle);
             }
             if (event.which === escKey) {
                 card.contentEditable = false;
@@ -110,8 +111,6 @@ export let templates = {
             }
         });
         cardElement.dataset.cardId = cardId;
-        cardElement.innerHTML = `<p>${cardTitle}</p>
-                                 <p><i class="fas fa-trash-alt"></i></p>`;
         let trash = cardElement.querySelector(".fa-trash-alt");
         trash.addEventListener("click", function(event) {
            let clickedTrash = event.target;
