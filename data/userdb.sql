@@ -1,17 +1,4 @@
-﻿ALTER TABLE IF EXISTS ONLY public.statuses
-  DROP CONSTRAINT IF EXISTS statuses_pk CASCADE;
-DROP TABLE IF EXISTS public.statuses;
-CREATE TABLE statuses
-(
-  id   serial NOT NULL,
-  name text
-);
-
-ALTER TABLE ONLY statuses
-  ADD CONSTRAINT statuses_pk PRIMARY KEY (id);
-
-
-ALTER TABLE IF EXISTS ONLY public.boards
+﻿ALTER TABLE IF EXISTS ONLY public.boards
   DROP CONSTRAINT IF EXISTS boards_pk CASCADE;
 DROP TABLE IF EXISTS public.boards;
 CREATE TABLE boards
@@ -27,10 +14,10 @@ ALTER TABLE ONLY boards
 
 ALTER TABLE IF EXISTS ONLY public.cards
   DROP CONSTRAINT IF EXISTS cards_pk CASCADE;
+
 ALTER TABLE IF EXISTS ONLY public.cards
   DROP CONSTRAINT IF EXISTS board_id_fkey CASCADE;
-ALTER TABLE IF EXISTS ONLY public.cards
-  DROP CONSTRAINT IF EXISTS status_id_fkey CASCADE;
+
 DROP TABLE IF EXISTS public.cards;
 
 CREATE TABLE cards
@@ -47,6 +34,3 @@ ALTER TABLE ONLY cards
 
 ALTER TABLE ONLY cards
   ADD CONSTRAINT board_id_fkey FOREIGN KEY (board_id) REFERENCES boards (id);
-
-ALTER TABLE ONLY cards
-  ADD CONSTRAINT status_id_fkey FOREIGN KEY (status_id) REFERENCES statuses (id);
