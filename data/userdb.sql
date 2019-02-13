@@ -1,10 +1,14 @@
-﻿ALTER TABLE IF EXISTS ONLY public.boards
+﻿ALTER TABLE IF EXISTS ONLY public.cards
+  DROP CONSTRAINT IF EXISTS board_id_fkey CASCADE;
+
+ALTER TABLE IF EXISTS ONLY public.boards
   DROP CONSTRAINT IF EXISTS boards_pk CASCADE;
+
 DROP TABLE IF EXISTS public.boards;
 CREATE TABLE boards
 (
-  id    serial NOT NULL,
-  title text,
+  id       serial NOT NULL,
+  title    text,
   statuses text
 );
 
@@ -15,8 +19,6 @@ ALTER TABLE ONLY boards
 ALTER TABLE IF EXISTS ONLY public.cards
   DROP CONSTRAINT IF EXISTS cards_pk CASCADE;
 
-ALTER TABLE IF EXISTS ONLY public.cards
-  DROP CONSTRAINT IF EXISTS board_id_fkey CASCADE;
 
 DROP TABLE IF EXISTS public.cards;
 
