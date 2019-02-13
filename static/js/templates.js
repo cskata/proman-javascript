@@ -19,6 +19,10 @@ export let templates = {
 
         let boardBody = templates.createBoardBody(boardStatuses, boardId);
 
+        let classNames = boardBody.getElementsByTagName('td');
+        let dragSelector = Array.from(classNames);
+        dragula(dragSelector);
+
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
         board.appendChild(boardBody);
@@ -166,23 +170,20 @@ export let templates = {
     createTableBody: function (boardStatuses, boardId) {
         let tableBody = document.createElement('tr');
         tableBody.classList.add('cards');
+        let classId = 'board' + boardId;
         for (let i = 0; i < boardStatuses.length; i++) {
             let cell = document.createElement('td');
-            cell.setAttribute("class", boardId);
+            cell.setAttribute("class", classId);
             tableBody.appendChild(cell);
         }
-        drag(boardId);
-
 
         return tableBody
     }
 };
 
 
-function drag(boardId){
-    let bazd = boardId.toString();
-    console.log(typeof bazd);
-    let containers = document.getElementsByClassName(`${bazd}`);
+function drag(classId){
+    let containers = document.getElementsByClassName(classId);
     let containersArray = Array.from(containers);
     dragula(containersArray);
 }
