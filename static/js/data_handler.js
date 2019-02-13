@@ -62,7 +62,12 @@ export let dataHandler = {
             'Content-Type': 'application/json'
           }
         })
-        .then(response => console.log('Success:', JSON.stringify(response)))
+        .then(response => {
+            console.log('Success:', JSON.stringify(response));
+            let fullContent = document.querySelector("#full-content");
+            fullContent.innerHTML = "";
+            dataHandler.getBoards();
+        })
     },
     saveNewCard: function(boardId, orderNumber) {
         let url = '/save-card';
@@ -98,7 +103,6 @@ export let dataHandler = {
     deleteBoard: function(board_id){
         let url = '/delete-board';
         let data = {board_id: board_id};
-        console.log(data);
 
         fetch(url, {
           method: 'DELETE',

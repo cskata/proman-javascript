@@ -42,14 +42,15 @@ def delete_card():
     data = request.get_json()
     card_id = data["card_id"]
     data_manager.delete_card(card_id)
+    return "", 204
 
 
 @app.route('/delete-board', methods=["DELETE"])
 def delete_board():
     data = request.get_json()
     board_id = data["board_id"]
-    print(board_id)
     data_manager.delete_board(board_id)
+    return "", 204
 
 
 def main():
