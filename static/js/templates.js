@@ -100,6 +100,7 @@ export let templates = {
             if (event.which === enterKey) {
                 card.contentEditable = false;
                 cardElement.dataset.cardTitle = cardElement.innerHTML;
+                // here comes the SQL magic
             }
             if (event.which === escKey) {
                 card.contentEditable = false;
@@ -138,6 +139,7 @@ export let templates = {
                 if (event.which === enterKey){
                     cell.setAttribute('contentEditable', 'false');
                     cell.dataset.cellTitle = cell.innerHTML;
+                    // here comes the SQL magic
                 }
                 if (event.which === escKey){
                     cell.setAttribute('contentEditable', 'false');
