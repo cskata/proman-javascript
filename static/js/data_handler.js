@@ -76,5 +76,24 @@ export let dataHandler = {
           }
         })
         .then(response => console.log('Success:', JSON.stringify(response)))
+    },
+    deleteCard: function(clickedCardId){
+        console.log(clickedCardId);
+        let url = '/delete-card';
+        let data = {card_id: clickedCardId};
+
+        fetch(url, {
+          method: 'DELETE',
+          body: JSON.stringify(data),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+            console.log('Success:', JSON.stringify(response));
+            let fullContent = document.querySelector("#full-content");
+            fullContent.innerHTML = "";
+            dataHandler.getBoards();
+        });
     }
 };

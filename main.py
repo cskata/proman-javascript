@@ -37,6 +37,13 @@ def save_card():
     return "", 204
 
 
+@app.route("/delete-card", methods=["DELETE"])
+def delete_card():
+    data = request.get_json()
+    id = data["card_id"]
+    data_manager.delete_card(id)
+
+
 def main():
     app.run(
         host='0.0.0.0',

@@ -52,18 +52,31 @@ export let templates = {
         const orderNumber = (firstColumn.children.length) + 1;
         dataHandler.saveNewCard(boardId, orderNumber);
 
-        let newCard = templates.createCardElement('New Card');
+        /*let newCard = templates.createCardElement('New Card');
         let boardBody = document.querySelector(`.board[data-board-id="${boardId}"] .board-body`);
         boardBody.style.height = 'auto';
         let boardHeader = document.querySelector(`.board[data-board-id="${boardId}"] .board-header`);
 
         boardHeader.dataset.heightChecked = 'false';
-        firstColumn.appendChild(newCard);
+        firstColumn.appendChild(newCard);*/
+        let fullContent = document.querySelector("#full-content");
+        fullContent.innerHTML = "";
+        dataHandler.getBoards();
     },
-    createCardElement: function (cardTitle) {
+    createCardElement: function (cardTitle, cardId) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
-        cardElement.innerHTML = `${cardTitle}`;
+        cardElement.dataset.cardId = cardId;
+        cardElement.innerHTML = `<p>${cardTitle}</p>
+                                 <p><i class="fas fa-trash-alt"></i></p>`;
+        let trash = cardElement.querySelector(".fa-trash-alt");
+        trash.addEventListener("click", function(event) {
+           let clickedTrash = event.target;
+           if (clickedTrash.classList.contains("fa-trash-alt")){
+               let clickedCardId = clickedTrash.parentNode.parentNode.dataset.cardId;
+               dataHandler.deleteCard(clickedCardId);
+           }
+        });
         return cardElement;
     },
     createBoardBody: function (boardStatuses) {
