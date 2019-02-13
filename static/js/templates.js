@@ -27,7 +27,6 @@ export let templates = {
         let classNames = boardBody.getElementsByTagName('td');
         let dragSelector = Array.from(classNames);
         dragula(dragSelector);
-        let boardBody = templates.createBoardBody(boardStatuses, boardId);
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
