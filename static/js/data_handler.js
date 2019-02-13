@@ -52,7 +52,7 @@ export let dataHandler = {
         // creates new card, saves it and calls the callback function with its data
     },
     saveNewBoard: function() {
-        let url = '/save-board';
+        let url = '/boards';
         let data = {title: "New Board", statuses: "New, In Progress, Testing, Done"};
 
         fetch(url, {
@@ -70,7 +70,7 @@ export let dataHandler = {
         })
     },
     saveNewCard: function(boardId, orderNumber) {
-        let url = '/save-card';
+        let url = '/cards';
         let data = {title: "New Card", board_id: boardId, status_id: 1, order_num: orderNumber};
 
         fetch(url, {
@@ -83,7 +83,7 @@ export let dataHandler = {
         .then(response => console.log('Success:', JSON.stringify(response)))
     },
     deleteCard: function(clickedCardId){
-        let url = '/delete-card';
+        let url = '/cards';
         let data = {card_id: clickedCardId};
 
         fetch(url, {
@@ -101,7 +101,7 @@ export let dataHandler = {
         });
     },
     deleteBoard: function(board_id){
-        let url = '/delete-board';
+        let url = '/boards';
         let data = {board_id: board_id};
 
         fetch(url, {
@@ -119,9 +119,7 @@ export let dataHandler = {
         });
     },
     updateBoard: function(board_id, new_title){
-        console.log(board_id);
-        console.log(new_title);
-        let url = '/update-board-title';
+        let url = '/boards';
         let data = {id: board_id, new_title: new_title};
 
         fetch(url, {
@@ -136,7 +134,7 @@ export let dataHandler = {
         });
     },
     updateCard: function(card_id, new_title){
-        let url = '/update-card-title';
+        let url = '/cards';
         let data = {id: card_id, new_title: new_title};
 
         fetch(url, {
@@ -151,9 +149,8 @@ export let dataHandler = {
         });
     },
     updateStatuses: function(statuses, id) {
-        let url = '/update-statuses';
+        let url = '/statuses';
         let data = {statuses: statuses, id: id};
-        console.log(data);
 
         fetch(url, {
             method: 'PUT',
