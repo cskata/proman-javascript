@@ -127,5 +127,21 @@ export let dataHandler = {
         .then(response =>{
         console.log('Success:', JSON.stringify(response));
         });
+    },
+    updateStatuses: function(statuses, id) {
+        let url = '/update-statuses';
+        let data = {statuses: statuses, id: id};
+        console.log(data);
+
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                console.log('Success:', JSON.stringify(response));
+            });
     }
 };

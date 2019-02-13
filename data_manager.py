@@ -78,6 +78,14 @@ def update_card_title(cursor, id, new_title):
                     """,
                    {'new_title': new_title, 'id': id})
 
+@connection_handler
+def update_statuses(cursor, statuses, id):
+    cursor.execute("""
+                    UPDATE boards
+                    SET statuses = %(statuses)s WHERE id = %(id)s
+                    """,
+                   {'statuses': statuses, 'id': id})
+
 
 def format_boards_with_cards(boards):
     for board in boards:

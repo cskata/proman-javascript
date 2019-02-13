@@ -17,7 +17,7 @@ export let templates = {
             templates.handleNewCardButtonClick(event);
         });
 
-        let boardBody = templates.createBoardBody(boardStatuses);
+        let boardBody = templates.createBoardBody(boardStatuses, boardId);
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
@@ -95,7 +95,7 @@ export let templates = {
             let card = event.target;
             if (event.which === enterKey) {
                 card.contentEditable = false;
-                cardElement.dataset.cardTitle = cardElement.innerHTML;
+                cardElement.dataset.cardTitle = firstPara.innerHTML;
                 dataHandler.updateCard(cardId, cardElement.dataset.cardTitle);
             }
             if (event.which === escKey) {
@@ -115,13 +115,13 @@ export let templates = {
         });
         return cardElement;
     },
-    createBoardBody: function (boardStatuses) {
+    createBoardBody: function (boardStatuses, boardId) {
         let boardBody = document.createElement("div");
         boardBody.classList.add('board-body');
 
         let table = document.createElement('table');
         table.classList.add('board-data');
-        let tableHeader = templates.createTableHeader(boardStatuses);
+        let tableHeader = templates.createTableHeader(boardStatuses, boardId);
         let tableBody = templates.createTableBody(boardStatuses);
         table.appendChild(tableHeader);
         table.appendChild(tableBody);
@@ -129,7 +129,7 @@ export let templates = {
         boardBody.appendChild(table);
         return boardBody
     },
-    createTableHeader: function (boardStatuses) {
+    createTableHeader: function (boardStatuses, boardId) {
         let tableHeader = document.createElement('tr');
         tableHeader.classList.add('statuses');
         for (const status of boardStatuses) {
@@ -143,9 +143,12 @@ export let templates = {
                 const enterKey = 13;
                 const escKey = 27;
                 if (event.which === enterKey){
+                    let cellId = boardStatuses.indexOf(cell.dataset.cellTitle);
                     cell.setAttribute('contentEditable', 'false');
                     cell.dataset.cellTitle = cell.innerHTML;
-                    // here comes the SQL magic
+                    boardStatuses[cellId] = cell.dataset.cellTitle;
+                    let newStatuses = boardStatuses.toString();
+                    dataHandler.updateStatuses(newStatuses, boardId);
                 }
                 if (event.which === escKey){
                     cell.setAttribute('contentEditable', 'false');

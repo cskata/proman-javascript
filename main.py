@@ -62,6 +62,15 @@ def update_card_title():
     return "", 204
 
 
+@app.route('/update-statuses', methods=["PUT"])
+def update_statuses():
+    data = request.get_json()
+    statuses = data['statuses']
+    board_id = data['id']
+    data_manager.update_statuses(statuses, board_id)
+    return "", 204
+
+
 def main():
     app.run(
         host='0.0.0.0',
