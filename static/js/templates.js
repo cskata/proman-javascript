@@ -180,11 +180,3 @@ export let templates = {
         return tableBody
     }
 };
-
-
-function drag(classId){
-    let containers = document.getElementsByClassName(classId);
-    let containersArray = Array.from(containers);
-    dragula(containersArray);
-}
-
