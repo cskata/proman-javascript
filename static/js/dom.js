@@ -75,6 +75,7 @@ export let dom = {
                 let initHeight = boardHeader.dataset.initHeight;
 
                 if (tableHeightChecked === 'false') {
+                    tableContainer.style.height = `${tableContainer.offsetHeight}px`;
                     boardHeader.dataset.initHeight = `${tableContainer.offsetHeight}`;
                     boardHeader.dataset.heightChecked = 'true';
                 }
