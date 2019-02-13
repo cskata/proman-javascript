@@ -128,6 +128,22 @@ export let templates = {
         for (const status of boardStatuses) {
             let cell = document.createElement('th');
             cell.innerHTML = `${status}`;
+            cell.dataset.cellTitle = cell.innerHTML;
+            cell.addEventListener('click', function(){
+               cell.setAttribute('contentEditable', 'true');
+            });
+            cell.addEventListener('keydown', function(){
+                const enterKey = 13;
+                const escKey = 27;
+                if (event.which === enterKey){
+                    cell.setAttribute('contentEditable', 'false');
+                    cell.dataset.cellTitle = cell.innerHTML;
+                }
+                if (event.which === escKey){
+                    cell.setAttribute('contentEditable', 'false');
+                    cell.innerHTML = cell.dataset.cellTitle;
+                }
+            });
             tableHeader.appendChild(cell);
         }
         return tableHeader
