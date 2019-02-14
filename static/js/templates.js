@@ -69,7 +69,6 @@ export let templates = {
         let newCardButton = document.createElement('button');
         newCardButton.classList.add('new-card-button');
         newCardButton.innerHTML = 'Add New Card';
-        newCardButton.style.visibility = "hidden";
         return newCardButton
     },
     handleNewCardButtonClick: function(event) {
@@ -88,7 +87,6 @@ export let templates = {
         let deleteBoardButton = document.createElement('button');
         deleteBoardButton.classList.add('delete-board-button');
         deleteBoardButton.innerHTML = 'Delete Board';
-        deleteBoardButton.style.visibility = "hidden";
         return deleteBoardButton
     },
     handleDeleteButtonClick: function(event){
