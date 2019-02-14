@@ -26,81 +26,63 @@ def get_cards(cursor, board_id):
 
 
 @connection_handler
-def get_last_id(cursor, table):
-    cursor.execute(sql.SQL("""
-                    SELECT max(id) FROM {table};
-                    """).format(table=sql.Identifier(table)))
-    max_id = cursor.fetchone()
-    return max_id["max"]
-
-
-@connection_handler
-def add_new_board(cursor, new_board):
+def add_new_board(cursor, data):
     cursor.execute("""
                     INSERT INTO boards(title, statuses)
                     VALUES (%(title)s, %(statuses)s);
-                    """,
-                   {"title": new_board["title"], "statuses": new_board["statuses"]})
+                    """, data)
 
 
 @connection_handler
-def add_new_card(cursor, new_card):
+def add_new_card(cursor, data):
     cursor.execute("""
                     INSERT INTO cards (title, board_id, status_id, order_num)
                     VALUES (%(title)s, %(board_id)s, %(status_id)s, %(order_num)s);
-                    """,
-               {"title": new_card["title"], "board_id": new_card["board_id"],
-                "status_id": new_card["status_id"], "order_num": new_card["order_num"]})
+                    """, data)
 
 
 @connection_handler
-def delete_card(cursor, card_id):
+def delete_card(cursor, data):
     cursor.execute("""
                     DELETE FROM cards
                     WHERE id = %(card_id)s;
-                   """,
-                   {"card_id": card_id})
+                   """, data)
 
 
 @connection_handler
-def update_board_title(cursor, id, new_title):
+def update_board_title(cursor, data):
     cursor.execute("""
                     UPDATE boards
                     SET title = %(new_title)s WHERE id = %(id)s;
-                    """,
-                   {'new_title': new_title, 'id': id})
+                    """, data)
 
 
 @connection_handler
-def update_card_title(cursor, id, new_title):
+def update_card_title(cursor, data):
     cursor.execute("""
                     UPDATE cards
                     SET title = %(new_title)s WHERE id = %(id)s;
-                    """,
-                   {'new_title': new_title, 'id': id})
+                    """, data)
 
 
 @connection_handler
-def update_statuses(cursor, statuses, id):
+def update_statuses(cursor, data):
     cursor.execute("""
                     UPDATE boards
                     SET statuses = %(statuses)s WHERE id = %(id)s
-                    """,
-                   {'statuses': statuses, 'id': id})
+                    """, data)
 
 
 @connection_handler
-def delete_board(cursor, board_id):
+def delete_board(cursor, data):
     cursor.execute("""
                         DELETE FROM cards
                         WHERE board_id = %(board_id)s;
-                        """,
-                   {"board_id": board_id})
+                        """, data)
     cursor.execute("""
                     DELETE FROM boards
                     WHERE id = %(board_id)s;
-                    """,
-                   {"board_id": board_id})
+                    """, data)
 
 
 @connection_handler
