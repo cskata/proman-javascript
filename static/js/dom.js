@@ -46,15 +46,11 @@ export let dom = {
                 const newCardButton = boardHeader.querySelector('.new-card-button');
                 const deleteBoardButton = boardHeader.querySelector(".delete-board-button");
 
-                const tableHeightChecked = boardHeader.dataset.heightChecked;
                 const isTableOpen = boardHeader.dataset.tableIsOpen;
                 const initHeight = boardHeader.dataset.initHeight;
 
-                if (tableHeightChecked === 'false') {
-                    tableContainer.style.height = `${tableContainer.offsetHeight}px`;
-                    boardHeader.dataset.initHeight = `${tableContainer.offsetHeight}`;
-                    //boardHeader.dataset.heightChecked = 'true';
-                }
+                tableContainer.style.height = `${table.getBoundingClientRect().height}px`;
+                boardHeader.dataset.initHeight = `${table.getBoundingClientRect().height}`;
 
                 if (isTableOpen === 'true') {
                     boardHeader.dataset.tableIsOpen = 'false';

@@ -24,7 +24,7 @@ export let templates = {
         });
 
         let boardBody = templates.createBoardBody(boardStatuses, boardId);
-        templates.dragAndDropCards(boardBody);
+        templates.dragAndDropCards(boardBody, boardHeader);
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
@@ -40,9 +40,6 @@ export let templates = {
             `;
 
         boardHeader.dataset.tableIsOpen = 'true';
-        boardHeader.dataset.heightChecked = 'false';
-        boardHeader.dataset.initHeight = '0';
-
         templates.editBoardTitle(boardHeader, boardId);
 
         return boardHeader
@@ -72,6 +69,7 @@ export let templates = {
         let newCardButton = document.createElement('button');
         newCardButton.classList.add('new-card-button');
         newCardButton.innerHTML = 'Add New Card';
+        newCardButton.style.visibility = "hidden";
         return newCardButton
     },
     handleNewCardButtonClick: function(event) {
@@ -90,6 +88,7 @@ export let templates = {
         let deleteBoardButton = document.createElement('button');
         deleteBoardButton.classList.add('delete-board-button');
         deleteBoardButton.innerHTML = 'Delete Board';
+        deleteBoardButton.style.visibility = "hidden";
         return deleteBoardButton
     },
     handleDeleteButtonClick: function(event){
@@ -200,7 +199,7 @@ export let templates = {
            }
         });
     },
-    dragAndDropCards: function(boardBody) {
+    dragAndDropCards: function(boardBody, boardHeader) {
         let classNames = boardBody.getElementsByTagName('td');
         let dragSelector = Array.from(classNames);
         dragula(dragSelector).on("drop", function (element, target, source) {
@@ -225,6 +224,7 @@ export let templates = {
             let table = document.querySelector(".board-data");
             let tableHeight = table.getBoundingClientRect().height;
             boardBody.style.height = `${tableHeight}px`;
+            boardHeader.dataset.initHeight = `${tableHeight}`;
         });
     }
 };
