@@ -72,6 +72,13 @@ def update_card_order():
     return "", 204
 
 
+@app.route('/update-board-visibility', methods=["PUT"])
+def update_board_visibility():
+    data = request.get_json()
+    data_manager.update_board_visibility(data)
+    return "", 204
+
+
 def main():
     app.run(
         host='0.0.0.0',

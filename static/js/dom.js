@@ -1,4 +1,5 @@
 import {templates} from "./templates.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     showBoards: function (boards) {
@@ -58,6 +59,10 @@ export let dom = {
 
             if (isTableOpen === 'true') {
                 boardHeader.dataset.tableIsOpen = 'false';
+                boardHeader.dataset.visibility = 'false';
+                let boardId = (boardHeader.parentNode).dataset.boardId;
+                let data = {board_id: boardId, visibility: boardHeader.dataset.visibility};
+                dataHandler.updateBoardVisibility(data);
                 tableContainer.style.height = '0px';
                 arrow.style.transform = 'translate(0, 25%) rotateX(180deg)';
                 table.style.display = 'none';
@@ -71,6 +76,9 @@ export let dom = {
             } else {
                 boardHeader.dataset.tableIsOpen = 'true';
                 tableContainer.style.height = `${initHeight}px`;
+                let boardId = (boardHeader.parentNode).dataset.boardId;
+                let data = {board_id: boardId, visibility: 'true'};
+                dataHandler.updateBoardVisibility(data);
                 arrow.style.transform = 'rotateX(0deg)';
                 boardHeader.style.borderBottomLeftRadius = "0";
                 boardHeader.style.borderBottomRightRadius = "0";

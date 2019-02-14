@@ -52,6 +52,10 @@ export let dataHandler = {
         let url = '/card-order-update';
         this.ajaxWrapperWithoutReload(url, data, 'PUT');
     },
+    updateBoardVisibility: function(data){
+        let url = '/update-board-visibility';
+        this.ajaxWrapperWithoutReload(url, data, 'PUT');
+    },
     ajaxWrapperWithReload: function (url, data, method) {
         fetch(url, {
             method: method,

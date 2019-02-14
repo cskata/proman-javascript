@@ -62,6 +62,8 @@ export let templates = {
 
         if (boardVisibility === 'false'){
             boardHeader.dataset.tableIsOpen = 'false';
+            boardHeader.dataset.heightChecked = 'true';
+            boardHeader.dataset.initHeight = '201'; // this is a magic number! We need to find the actual height here!
             tableContainer.style.height = '0px';
             arrow.style.transform = 'translate(0, 25%) rotateX(180deg)';
             table.style.display = 'none';

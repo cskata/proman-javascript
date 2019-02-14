@@ -94,6 +94,15 @@ def update_card_order(cursor, data):
                     """, data)
 
 
+@connection_handler
+def update_board_visibility(cursor, data):
+    cursor.execute("""
+                    UPDATE boards
+                    SET visibility = %(visibility)s
+                    WHERE id = %(board_id)s;
+                    """, data)
+
+
 def format_boards_with_cards(boards):
     for board in boards:
         board["cards"] = get_cards(board["id"])
