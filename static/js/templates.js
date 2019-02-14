@@ -78,8 +78,8 @@ export let templates = {
             <i class="fas fa-caret-up"></i>
             `;
 
-        boardHeader.dataset.tableIsOpen = boardVisibility;
-        boardHeader.dataset.heightChecked = 'true';
+        boardHeader.dataset.tableIsOpen = 'true';
+        boardHeader.dataset.heightChecked = 'false';
         boardHeader.dataset.initHeight = '0';
 
         let title = boardHeader.querySelector('.board-title');
