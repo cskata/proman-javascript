@@ -163,7 +163,18 @@ export let dataHandler = {
                 console.log('Success:', JSON.stringify(response));
             });
     },
-    updateCardOrder: function() {
+    updateCardOrder: function(data) {
+        let url = '/card-order-update';
 
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                console.log('Success:', JSON.stringify(response));
+            });
     }
 };

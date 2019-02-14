@@ -73,6 +73,13 @@ def update_statuses():
     return "", 204
 
 
+@app.route('/card-order-update', methods=["PUT"])
+def update_card_order():
+    data = request.get_json()
+    data_manager.update_card_order(data)
+    return "", 204
+
+
 def main():
     app.run(
         host='0.0.0.0',

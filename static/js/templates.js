@@ -28,15 +28,24 @@ export let templates = {
         let dragSelector = Array.from(classNames);
         dragula(dragSelector).on("drop", function (element, target, source) {
             for (let i = 0; i < source.childNodes.length; i++){
-                source.childNodes[i].dataset.order = `${i + 1}`;
+                let card = source.childNodes[i];
+                let cardOrderId = i + 1;
+                card.dataset.order = `${cardOrderId}`;
+                let status = source.dataset.status;
+                let cardId = card.dataset.cardId;
+                let data = {order : cardOrderId, status: status, cardId: cardId};
+                dataHandler.updateCardOrder(data);
             }
             for (let i = 0; i < target.childNodes.length; i++){
-                target.childNodes[i].dataset.order = `${i + 1}`;
+                let card = target.childNodes[i];
+                let cardOrderId = i + 1;
+                card.dataset.order = `${cardOrderId}`;
+                let status = target.dataset.status;
+                let cardId = card.dataset.cardId;
+                let data = {order : cardOrderId, status: status, cardId: cardId};
+                dataHandler.updateCardOrder(data);
             }
         });
-
-
-
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);

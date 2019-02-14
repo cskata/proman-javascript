@@ -78,6 +78,7 @@ def update_card_title(cursor, id, new_title):
                     """,
                    {'new_title': new_title, 'id': id})
 
+
 @connection_handler
 def update_statuses(cursor, statuses, id):
     cursor.execute("""
@@ -99,6 +100,15 @@ def delete_board(cursor, board_id):
                     WHERE id = %(board_id)s;
                     """,
                    {"board_id": board_id})
+
+
+@connection_handler
+def update_card_order(cursor, data):
+    cursor.execute("""
+                    UPDATE cards
+                    SET status_id = %(status)s, order_num = %(order)s
+                    WHERE id = %(cardId)s;
+                    """, data)
 
 
 def format_boards_with_cards(boards):
