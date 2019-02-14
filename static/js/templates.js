@@ -101,7 +101,7 @@ export let templates = {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.innerHTML = `<p>${cardTitle}</p>
-                                 <p><i class="fas fa-trash-alt" title="Delete card"></i></p>`;
+                                 <p><i class="fas fa-trash-alt" title="Delete Card"></i></p>`;
 
         let firstPara = cardElement.querySelector("p:first-child");
         cardElement.dataset.cardTitle = firstPara.innerHTML;
