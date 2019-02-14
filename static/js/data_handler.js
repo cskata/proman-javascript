@@ -162,5 +162,8 @@ export let dataHandler = {
             .then(response => {
                 console.log('Success:', JSON.stringify(response));
             });
+    },
+    updateCardOrder: function() {
+
     }
 };

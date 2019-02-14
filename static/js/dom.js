@@ -22,7 +22,7 @@ export let dom = {
             let cards = board.cards;
             for (let i = 0; i < cards.length; i++) {
                 let column = dom.addCard(board, cards[i]);
-                let cardElement = templates.createCardElement(cards[i].title, cards[i].id);
+                let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num);
                 column.appendChild(cardElement);
             }
         },

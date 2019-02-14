@@ -26,7 +26,17 @@ export let templates = {
 
         let classNames = boardBody.getElementsByTagName('td');
         let dragSelector = Array.from(classNames);
-        dragula(dragSelector);
+        dragula(dragSelector).on("drop", function (element, target, source) {
+            for (let i = 0; i < source.childNodes.length; i++){
+                source.childNodes[i].dataset.order = `${i + 1}`;
+            }
+            for (let i = 0; i < target.childNodes.length; i++){
+                target.childNodes[i].dataset.order = `${i + 1}`;
+            }
+        });
+
+
+
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
@@ -97,9 +107,10 @@ export let templates = {
         let boardId = board.dataset.boardId;
         dataHandler.deleteBoard(boardId);
     },
-    createCardElement: function(cardTitle, cardId) {
+    createCardElement: function(cardTitle, cardId, orderNum) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
+        cardElement.setAttribute("data-order", orderNum);
         cardElement.innerHTML = `<p>${cardTitle}</p>
                                  <p><i class="fas fa-trash-alt" title="Delete Card"></i></p>`;
 
@@ -185,6 +196,7 @@ export let templates = {
         tableBody.classList.add('cards');
         for (let i = 0; i < boardStatuses.length; i++) {
             let cell = document.createElement('td');
+            cell.dataset.status = `${i + 1}`;
             tableBody.appendChild(cell);
         }
         return tableBody
