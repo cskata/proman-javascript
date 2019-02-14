@@ -1,9 +1,13 @@
 import {dom} from "./dom.js";
-import {templates} from "./templates.js";
 
 export let dataHandler = {
     keyInLocalStorage: 'proman-data',
     _data: {},
+    reloadContent: function(){
+        let fullContent = document.querySelector("#full-content");
+        fullContent.innerHTML = "";
+        dataHandler.getBoards();
+    },
     getBoards: function () {
         fetch('/boards')
         .then((response) => response.json())
@@ -12,106 +16,45 @@ export let dataHandler = {
     saveNewBoard: function() {
         let url = '/boards';
         let data = {title: "New Board", statuses: "New, In Progress, Testing, Done"};
-
-        fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers:{
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => {
-            console.log('Success:', JSON.stringify(response));
-            let fullContent = document.querySelector("#full-content");
-            fullContent.innerHTML = "";
-            dataHandler.getBoards();
-        })
+        this.ajaxWrapperWithReload(url, data, 'POST');
     },
     saveNewCard: function(boardId, orderNumber) {
         let url = '/cards';
         let data = {title: "New Card", board_id: boardId, status_id: 1, order_num: orderNumber};
-
-        fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers:{
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => console.log('Success:', JSON.stringify(response)))
+        this.ajaxWrapperWithoutReload(url, data, 'POST');
     },
     deleteCard: function(clickedCardId){
         let url = '/cards';
         let data = {card_id: clickedCardId};
-
-        fetch(url, {
-          method: 'DELETE',
-          body: JSON.stringify(data),
-          headers:{
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => {
-            console.log('Success:', JSON.stringify(response));
-            let fullContent = document.querySelector("#full-content");
-            fullContent.innerHTML = "";
-            dataHandler.getBoards();
-        });
+        this.ajaxWrapperWithReload(url, data, 'DELETE');
     },
     deleteBoard: function(board_id){
         let url = '/boards';
         let data = {board_id: board_id};
-
-        fetch(url, {
-          method: 'DELETE',
-          body: JSON.stringify(data),
-          headers:{
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => {
-            console.log('Success:', JSON.stringify(response));
-            let fullContent = document.querySelector("#full-content");
-            fullContent.innerHTML = "";
-            dataHandler.getBoards();
-        });
+        this.ajaxWrapperWithReload(url, data, 'DELETE');
     },
     updateBoard: function(board_id, new_title){
         let url = '/boards';
         let data = {id: board_id, new_title: new_title};
-
-        fetch(url, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-        console.log('Success:', JSON.stringify(response));
-        });
+        this.ajaxWrapperWithoutReload(url, data, 'PUT');
     },
     updateCard: function(card_id, new_title){
         let url = '/cards';
         let data = {id: card_id, new_title: new_title};
-
-        fetch(url, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response =>{
-        console.log('Success:', JSON.stringify(response));
-        });
+        this.ajaxWrapperWithoutReload(url, data, 'PUT');
     },
     updateStatuses: function(statuses, id) {
         let url = '/statuses';
         let data = {statuses: statuses, id: id};
-
+        this.ajaxWrapperWithoutReload(url, data, 'PUT');
+    },
+    updateCardOrder: function(data) {
+        let url = '/card-order-update';
+        this.ajaxWrapperWithoutReload(url, data, 'PUT');
+    },
+    ajaxWrapperWithReload: function (url, data, method) {
         fetch(url, {
-            method: 'PUT',
+            method: method,
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
@@ -119,13 +62,12 @@ export let dataHandler = {
         })
             .then(response => {
                 console.log('Success:', JSON.stringify(response));
+                dataHandler.reloadContent();
             });
     },
-    updateCardOrder: function(data) {
-        let url = '/card-order-update';
-
+    ajaxWrapperWithoutReload: function (url, data, method) {
         fetch(url, {
-            method: 'PUT',
+            method: method,
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
