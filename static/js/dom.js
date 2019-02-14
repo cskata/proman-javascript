@@ -46,39 +46,39 @@ export let dom = {
                 const newCardButton = boardHeader.querySelector('.new-card-button');
                 const deleteBoardButton = boardHeader.querySelector(".delete-board-button");
 
-                //const tableHeightChecked = boardHeader.dataset.heightChecked;
+                const tableHeightChecked = boardHeader.dataset.heightChecked;
                 const isTableOpen = boardHeader.dataset.tableIsOpen;
-                //const initHeight = boardHeader.dataset.initHeight;
+                const initHeight = boardHeader.dataset.initHeight;
 
-                /*if (tableHeightChecked === 'false') {
+                if (tableHeightChecked === 'false') {
                     tableContainer.style.height = `${tableContainer.offsetHeight}px`;
                     boardHeader.dataset.initHeight = `${tableContainer.offsetHeight}`;
-                    boardHeader.dataset.heightChecked = 'true';
-                }*/
+                    //boardHeader.dataset.heightChecked = 'true';
+                }
 
                 if (isTableOpen === 'true') {
                     boardHeader.dataset.tableIsOpen = 'false';
-                    //tableContainer.style.height = '0px';
+                    tableContainer.style.height = '0px';
                     arrow.style.transform = 'translate(0, 25%) rotateX(180deg)';
+                    table.style.display = 'none';
+                    newCardButton.style.visibility = 'hidden';
+                    deleteBoardButton.style.visibility = 'hidden';
 
                     setTimeout( function() {
-                        table.style.display = 'none';
-                        newCardButton.style.visibility = 'hidden';
-                        deleteBoardButton.style.visibility = 'hidden';
                         boardHeader.style.borderBottomLeftRadius = "10px";
                         boardHeader.style.borderBottomRightRadius = "10px";
                     }, 600);
                 } else {
                     boardHeader.dataset.tableIsOpen = 'true';
-                    //tableContainer.style.height = `${initHeight}px`;
+                    tableContainer.style.height = `${initHeight}px`;
                     arrow.style.transform = 'rotateX(0deg)';
+                    boardHeader.style.borderBottomLeftRadius = "0";
+                    boardHeader.style.borderBottomRightRadius = "0";
 
                     setTimeout(function() {
                         table.style.display = 'table';
                         newCardButton.style.visibility = 'visible';
                         deleteBoardButton.style.visibility = 'visible';
-                        boardHeader.style.borderBottomLeftRadius = "0";
-                        boardHeader.style.borderBottomRightRadius = "0";
                     }, 600);
                 }
             }

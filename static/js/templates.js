@@ -222,6 +222,9 @@ export let templates = {
                 let data = {order : cardOrderId, status: status, cardId: cardId};
                 dataHandler.updateCardOrder(data);
             }
+            let table = document.querySelector(".board-data");
+            let tableHeight = table.getBoundingClientRect().height;
+            boardBody.style.height = `${tableHeight}px`;
         });
     }
 };
