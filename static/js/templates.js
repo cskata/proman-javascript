@@ -2,7 +2,7 @@ import {dom} from "./dom.js";
 import {dataHandler} from "./data_handler.js";
 
 export let templates = {
-    createBoardElement: function(boardTitle, boardStatuses, boardId) {
+    createBoardElement: function(boardTitle, boardStatuses, boardId, boardVisibility) {
 
         let fullContent = document.querySelector('#full-content');
 
@@ -10,7 +10,7 @@ export let templates = {
         board.classList.add('board');
         board.dataset.boardId = boardId;
 
-        let boardHeader = templates.createBoardHeader(boardTitle, boardId);
+        let boardHeader = templates.createBoardHeader(boardTitle, boardId, boardVisibility);
         let newCardButton = templates.createNewCardButton();
         boardHeader.appendChild(newCardButton);
         newCardButton.addEventListener('click', function(event) {
@@ -48,12 +48,29 @@ export let templates = {
         });
 
         board.appendChild(boardHeader);
+        boardHeader.dataset.visibility = boardVisibility;
+
         boardHeader.addEventListener('click', dom.toggleBoard);
+
         board.appendChild(boardBody);
 
         fullContent.appendChild(board);
+
+        const tableContainer = boardHeader.nextSibling;
+        const table = tableContainer.querySelector('.board-data');
+        const arrow = boardHeader.querySelector('.fas');
+
+        if (boardVisibility === 'false'){
+            boardHeader.dataset.tableIsOpen = 'false';
+            tableContainer.style.height = '0px';
+            arrow.style.transform = 'translate(0, 25%) rotateX(180deg)';
+            table.style.display = 'none';
+            newCardButton.style.visibility = 'hidden';
+            deleteBoardButton.style.visibility = 'hidden';
+        }
     },
-    createBoardHeader: function (boardTitle, boardId) {
+
+    createBoardHeader: function (boardTitle, boardId, boardVisibility) {
         let boardHeader = document.createElement("div");
         boardHeader.classList.add('board-header');
         boardHeader.innerHTML = `
@@ -61,8 +78,8 @@ export let templates = {
             <i class="fas fa-caret-up"></i>
             `;
 
-        boardHeader.dataset.tableIsOpen = 'true';
-        boardHeader.dataset.heightChecked = 'false';
+        boardHeader.dataset.tableIsOpen = boardVisibility;
+        boardHeader.dataset.heightChecked = 'true';
         boardHeader.dataset.initHeight = '0';
 
         let title = boardHeader.querySelector('.board-title');
