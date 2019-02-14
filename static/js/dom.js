@@ -41,29 +41,33 @@ export let dom = {
             } else {
                 boardHeader = event.target;
             }
+            const boardId = (boardHeader.parentNode).dataset.boardId;
             const tableContainer = boardHeader.nextSibling;
             const table = tableContainer.querySelector('.board-data');
             const arrow = boardHeader.querySelector('.fas');
             const newCardButton = boardHeader.querySelector('.new-card-button');
             const deleteBoardButton = boardHeader.querySelector(".delete-board-button");
 
-            const tableHeightChecked = boardHeader.dataset.heightChecked;
+            // const tableHeightChecked = boardHeader.dataset.heightChecked;
             const isTableOpen = boardHeader.dataset.tableIsOpen;
-            const initHeight = boardHeader.dataset.initHeight;
+            // const initHeight = boardHeader.dataset.initHeight;
 
-            if (tableHeightChecked === 'false') {
+            /* if (tableHeightChecked === 'false') {
                 tableContainer.style.height = `${tableContainer.offsetHeight}px`;
                 boardHeader.dataset.initHeight = `${tableContainer.offsetHeight}`;
                 boardHeader.dataset.heightChecked = 'true';
-            }
+            } */
 
             if (isTableOpen === 'true') {
                 boardHeader.dataset.tableIsOpen = 'false';
+
+                // the following 3 lines are sending all the necessary information to update the table to hidden in the db
+
                 boardHeader.dataset.visibility = 'false';
-                let boardId = (boardHeader.parentNode).dataset.boardId;
                 let data = {board_id: boardId, visibility: boardHeader.dataset.visibility};
                 dataHandler.updateBoardVisibility(data);
-                tableContainer.style.height = '0px';
+
+                // tableContainer.style.height = '0px';
                 arrow.style.transform = 'translate(0, 25%) rotateX(180deg)';
                 table.style.display = 'none';
                 newCardButton.style.visibility = 'hidden';
@@ -75,10 +79,13 @@ export let dom = {
                 }, 600);
             } else {
                 boardHeader.dataset.tableIsOpen = 'true';
-                tableContainer.style.height = `${initHeight}px`;
-                let boardId = (boardHeader.parentNode).dataset.boardId;
+                // tableContainer.style.height = `${initHeight}px`;
+
+                // setting the table to visible in the SQL database
+
                 let data = {board_id: boardId, visibility: 'true'};
                 dataHandler.updateBoardVisibility(data);
+
                 arrow.style.transform = 'rotateX(0deg)';
                 boardHeader.style.borderBottomLeftRadius = "0";
                 boardHeader.style.borderBottomRightRadius = "0";

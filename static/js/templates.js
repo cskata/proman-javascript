@@ -56,20 +56,26 @@ export let templates = {
 
         fullContent.appendChild(board);
 
+
+        // warning: spaghetti incoming.
+
+        // this following part maybe could be done in dom. It is important that if the table is in 'false' visibility it acts like one that had been closed-up just now
         const tableContainer = boardHeader.nextSibling;
+        console.log(tableContainer);
         const table = tableContainer.querySelector('.board-data');
         const arrow = boardHeader.querySelector('.fas');
 
         if (boardVisibility === 'false'){
             boardHeader.dataset.tableIsOpen = 'false';
             boardHeader.dataset.heightChecked = 'true';
-            boardHeader.dataset.initHeight = '201'; // this is a magic number! We need to find the actual height here!
-            tableContainer.style.height = '0px';
+            // tableContainer.style.height = '0px';
             arrow.style.transform = 'translate(0, 25%) rotateX(180deg)';
             table.style.display = 'none';
             newCardButton.style.visibility = 'hidden';
             deleteBoardButton.style.visibility = 'hidden';
         }
+
+        // end of spaghetti
     },
 
     createBoardHeader: function (boardTitle, boardId, boardVisibility) {
