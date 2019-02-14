@@ -18,7 +18,7 @@ def get_cards(cursor, board_id):
     cursor.execute("""
                     SELECT * FROM cards
                     WHERE board_id = %(board_id)s
-                    ORDER BY id ASC;
+                    ORDER BY order_num ASC;
                     """,
                    {"board_id": board_id})
     cards = cursor.fetchall()
