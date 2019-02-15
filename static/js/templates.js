@@ -201,6 +201,7 @@ export let templates = {
         let classNames = boardBody.getElementsByTagName('td');
         let dragSelector = Array.from(classNames);
         dragula(dragSelector).on("drop", function (element, target, source) {
+            boardBody.style.height = `auto`;
             for (let i = 0; i < source.childNodes.length; i++){
                 let card = source.childNodes[i];
                 let cardOrderId = i + 1;
