@@ -52,6 +52,12 @@ export let dataHandler = {
         let url = '/card-order-update';
         this.ajaxWrapperWithoutReload(url, data, 'PUT');
     },
+    handleRegistration: function(data) {
+        let url = '/registration';
+        this.ajaxWrapperWithReload(url, data, 'POST')
+    },
+
+
     ajaxWrapperWithReload: function (url, data, method) {
         fetch(url, {
             method: method,

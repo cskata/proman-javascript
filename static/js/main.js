@@ -1,4 +1,5 @@
 import {dataHandler} from "./data_handler.js";
+import {dom} from "./dom.js";
 
 function init() {
     dataHandler.getBoards();
@@ -7,6 +8,7 @@ function init() {
     addNewBoard.addEventListener('click', function(){
         dataHandler.saveNewBoard();
     });
+    dom.setModalTitle();
 
 }
 

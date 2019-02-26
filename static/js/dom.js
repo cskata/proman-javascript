@@ -78,6 +78,17 @@ export let dom = {
                     }, 600);
                 }
             }
+        },
+        setModalTitle: function() {
+            const regButton = document.querySelector('#registration');
+            const logButton = document.querySelector('#login');
+            const modalTitle = document.querySelector('#modal-title');
+            regButton.addEventListener('click', function (event) {
+                modalTitle.innerHTML = "Registration";
+            });
+            logButton.addEventListener('click', function (event) {
+                modalTitle.innerHTML = "Login";
+            });
         }
     };
 
