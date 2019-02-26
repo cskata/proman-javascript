@@ -8,7 +8,9 @@ function init() {
     addNewBoard.addEventListener('click', function(){
         dataHandler.saveNewBoard();
     });
+    dom.createNewUser();
     dom.setModalTitle();
+
 
 }
 

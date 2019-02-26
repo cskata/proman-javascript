@@ -1,6 +1,6 @@
 from connection import connection_handler
 from psycopg2 import sql
-
+import bcrypt
 
 @connection_handler
 def get_boards(cursor):
@@ -94,10 +94,27 @@ def update_card_order(cursor, data):
                     """, data)
 
 
+@connection_handler
+def register_user(cursor, data):
+    data["password"] = hash_password(data["password"])
+    cursor.execute("""
+                    INSERT INTO users (username, password)
+                    VALUES (%(username)s, %(password)s);
+                    """, data)
+
+
 def format_boards_with_cards(boards):
     for board in boards:
         board["cards"] = get_cards(board["id"])
         board["statuses"] = board["statuses"].split(",")
 
 
+def hash_password(plain_text_password):
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
 

@@ -72,6 +72,13 @@ def update_card_order():
     return "", 204
 
 
+@app.route('/registration', methods=['POST'])
+def register():
+    data = request.get_json()
+    data_manager.register_user(data)
+    return "", 204
+
+
 def main():
     app.run(
         host='0.0.0.0',

@@ -1,4 +1,5 @@
 import {templates} from "./templates.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
         showBoards: function (boards) {
@@ -88,6 +89,16 @@ export let dom = {
             });
             logButton.addEventListener('click', function (event) {
                 modalTitle.innerHTML = "Login";
+            });
+        },
+        createNewUser: function() {
+            const username = document.querySelector('#username');
+            const password = document.querySelector('#password');
+            const submitButton = document.querySelector('#submitButton');
+            submitButton.addEventListener('click', function(event) {
+                let data = {username: username.value,
+                            password: password.value};
+                dataHandler.handleRegistration(data);
             });
         }
     };
