@@ -84,14 +84,20 @@ export let dom = {
         const regButton = document.querySelector('#registration');
         const logButton = document.querySelector('#login');
         const modalTitle = document.querySelector('#modal-title');
+        const username = document.querySelector('#username');
+        const password = document.querySelector('#password');
         const submitButton = document.querySelector('#submitButton');
         regButton.addEventListener('click', function (event) {
             modalTitle.innerHTML = "Registration";
             submitButton.dataset.status = 'registration';
+            username.value = "";
+            password.value = "";
         });
         logButton.addEventListener('click', function (event) {
             modalTitle.innerHTML = "Login";
             submitButton.dataset.status = 'login';
+            username.value = "";
+            password.value = "";
         });
 
     },
