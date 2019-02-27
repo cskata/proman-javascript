@@ -1,13 +1,18 @@
-from flask import Flask, render_template, jsonify, request, json
+from flask import Flask, render_template, jsonify, request, json, session, redirect, url_for
 import data_manager
-
+import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(128)
 
 
 @app.route("/")
 def route_index():
-    return render_template('boards.html')
+    if 'username' in session:
+        username = session['username']
+        return render_template('boards.html', username=username)
+    else:
+        return render_template('boards.html')
 
 
 @app.route("/boards", methods=['GET'])
@@ -77,6 +82,20 @@ def register():
     data = request.get_json()
     data_manager.register_user(data)
     return "", 204
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    user_data = request.get_json()
+    if data_manager.check_login(user_data):
+        session['username'] = user_data['username']
+    return redirect(url_for('route_index'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('route_index'))
 
 
 def main():

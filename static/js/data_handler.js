@@ -56,6 +56,11 @@ export let dataHandler = {
         let url = '/registration';
         this.ajaxWrapperWithReload(url, data, 'POST')
     },
+    handleLogin: function(data) {
+
+        let url = '/login';
+        this.ajaxWrapperWithoutReload(url, data, 'POST')
+    },
 
 
     ajaxWrapperWithReload: function (url, data, method) {

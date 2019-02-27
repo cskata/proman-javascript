@@ -25,13 +25,17 @@
 <nav>
     <span>Proman</span>
     <button id="new-board-button">Create New Board</button>
+    {% if username %}
+        <a href="{{ url_for('logout') }}"><button type="button" id="logout" class="btn btn-primary">Logout</button></a>
+    {% else %}
     <!-- Button trigger modal -->
-    <button type="button" id="registration" class="btn btn-primary"  data-toggle="modal" data-target="#modal">
-        Registration
-    </button>
-    <button type="button" id="login" class="btn btn-primary"  data-toggle="modal" data-target="#modal">
-        Login
-    </button>
+        <button type="button" id="registration" class="btn btn-primary"  data-toggle="modal" data-target="#modal">
+            Registration
+        </button>
+        <button type="button" id="login" class="btn btn-primary"  data-toggle="modal" data-target="#modal">
+            Login
+        </button>
+    {% endif %}
 </nav>
 <main id="full-content">
 </main>

@@ -103,6 +103,21 @@ def register_user(cursor, data):
                     """, data)
 
 
+@connection_handler
+def get_password_for_user(cursor, username):
+    cursor.execute("""
+                    SELECT password FROM users
+                    WHERE username = %(username)s
+                    """, {'username': username})
+    password = cursor.fetchone()
+    return password
+
+
+def check_login(data):
+    hashed_password = get_password_for_user(data['username'])
+    return verify_password(data['password'], hashed_password['password'])
+
+
 def format_boards_with_cards(boards):
     for board in boards:
         board["cards"] = get_cards(board["id"])
