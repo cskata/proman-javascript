@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, session, redirect, url_for
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for, json
 import data_manager
 import os
 
@@ -85,9 +85,9 @@ def login():
     user_data = request.get_json()
     if data_manager.check_login(user_data):
         session['username'] = user_data['username']
-        return "", 200
+        return jsonify(username=session["username"])
     else:
-        return redirect(url_for('login'))
+        return jsonify(error="error")
 
 
 @app.route('/logout')

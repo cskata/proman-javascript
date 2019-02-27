@@ -93,9 +93,15 @@ export let dataHandler = {
                 'Content-Type': 'application/json'
             }
         })
-            .then(response => {
-                console.log('Success:', JSON.stringify(response));
-                window.location.href = ('/');
+            .then(response => response.json())
+            .then((obj) => {
+                console.log(obj.username, obj.error);
+                if (obj.username) {
+                    sessionStorage.setItem("username", obj.username);
+                    window.location.href = ('/');
+                } else {
+                    alert("Sorry, incorrect username or password!");
+                }
             });
     }
 };

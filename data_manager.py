@@ -115,7 +115,10 @@ def get_password_for_user(cursor, username):
 
 def check_login(data):
     hashed_password = get_password_for_user(data['username'])
-    return verify_password(data['password'], hashed_password['password'])
+    try:
+        return verify_password(data['password'], hashed_password['password'])
+    except TypeError:
+        return False
 
 
 def format_boards_with_cards(boards):
