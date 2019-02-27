@@ -8,10 +8,14 @@ function init() {
     addNewBoard.addEventListener('click', function(){
         dataHandler.saveNewBoard();
     });
-    dom.createNewUser();
-    dom.setModalTitle();
 
-
+    const user = sessionStorage.getItem("username");
+    if (user) {
+        dom.logoutUser();
+    } else {
+        dom.setModalTitle();
+        dom.registerOrLoginUser();
+    }
 }
 
 window.onload = init;

@@ -95,7 +95,7 @@ export let dom = {
         });
 
     },
-    createNewUser: function() {
+    registerOrLoginUser: function() {
         const username = document.querySelector('#username');
         const password = document.querySelector('#password');
         const submitButton = document.querySelector('#submitButton');
@@ -110,6 +110,12 @@ export let dom = {
                 dataHandler.handleLogin(data)
             }
         });
+    },
+    logoutUser: function() {
+        const logoutButton = document.querySelector("#logout");
+        logoutButton.addEventListener("click", function(event) {
+            dataHandler.handleLogout();
+        })
     }
 };
 

@@ -60,6 +60,10 @@ export let dataHandler = {
         let url = '/login';
         this.ajaxWrapperWithRefresh(url, data, 'POST')
     },
+    handleLogout: function() {
+        let url = '/logout';
+        this.ajaxLogout(url);
+    },
     ajaxWrapperWithReload: function (url, data, method) {
         fetch(url, {
             method: method,
@@ -103,5 +107,13 @@ export let dataHandler = {
                     alert("Sorry, incorrect username or password!");
                 }
             });
+    },
+    ajaxLogout: function(url) {
+        fetch(url)
+        .then((response) => {
+            console.log(response);
+            sessionStorage.removeItem("username");
+            window.location.href = ('/');
+        })
     }
 };
