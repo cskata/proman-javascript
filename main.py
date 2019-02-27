@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, json, session, redirect, url_for
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 import data_manager
 import os
 
@@ -8,11 +8,7 @@ app.secret_key = os.urandom(128)
 
 @app.route("/")
 def route_index():
-    if 'username' in session:
-        username = session['username']
-        return render_template('boards.html', username=username)
-    else:
-        return render_template('boards.html')
+    return render_template('boards.html')
 
 
 @app.route("/boards", methods=['GET'])
@@ -89,7 +85,9 @@ def login():
     user_data = request.get_json()
     if data_manager.check_login(user_data):
         session['username'] = user_data['username']
-    return redirect(url_for('route_index'))
+        return "", 200
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/logout')

@@ -57,12 +57,9 @@ export let dataHandler = {
         this.ajaxWrapperWithReload(url, data, 'POST')
     },
     handleLogin: function(data) {
-
         let url = '/login';
-        this.ajaxWrapperWithoutReload(url, data, 'POST')
+        this.ajaxWrapperWithRefresh(url, data, 'POST')
     },
-
-
     ajaxWrapperWithReload: function (url, data, method) {
         fetch(url, {
             method: method,
@@ -86,6 +83,19 @@ export let dataHandler = {
         })
             .then(response => {
                 console.log('Success:', JSON.stringify(response));
+            });
+    },
+    ajaxWrapperWithRefresh: function (url, data, method) {
+        fetch(url, {
+            method: method,
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                console.log('Success:', JSON.stringify(response));
+                window.location.href = ('/');
             });
     }
 };

@@ -80,8 +80,7 @@ export let dom = {
             }
         }
     },
-
-    setModalTitle: function () {
+    setModalTitle: function() {
         const regButton = document.querySelector('#registration');
         const logButton = document.querySelector('#login');
         const modalTitle = document.querySelector('#modal-title');
@@ -96,7 +95,7 @@ export let dom = {
         });
 
     },
-    createNewUser: function () {
+    createNewUser: function() {
         const username = document.querySelector('#username');
         const password = document.querySelector('#password');
         const submitButton = document.querySelector('#submitButton');
