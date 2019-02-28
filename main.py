@@ -13,7 +13,7 @@ def route_index():
 
 @app.route("/boards", methods=['GET'])
 def get_boards():
-    boards = data_manager.get_boards()
+    boards = data_manager.get_public_boards()
     return jsonify(boards)
 
 

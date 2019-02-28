@@ -4,10 +4,12 @@ import bcrypt
 
 
 @connection_handler
-def get_boards(cursor):
+def get_public_boards(cursor):
     cursor.execute("""
-                    SELECT * FROM boards
-                    ORDER BY id;
+                    SELECT boards.*, users.username FROM boards 
+                    LEFT JOIN users ON boards.user_id = users.id
+                    WHERE type = FALSE
+                    ORDER BY boards.id;
                     """)
     boards = cursor.fetchall()
     format_boards_with_cards(boards)

@@ -16,13 +16,13 @@ export let dataHandler = {
     saveNewPublicBoard: function () {
         let url = '/boards';
         let userId = sessionStorage.getItem('userId');
-        let data = {title: "New Board", statuses: "New, In Progress, Testing, Done", user_id: userId, type: false};
+        let data = {title: "New Public Board", statuses: "New, In Progress, Testing, Done", user_id: userId, type: false};
         this.ajaxWrapperWithReload(url, data, 'POST');
     },
     saveNewPrivateBoard: function () {
         let url = '/boards';
         let userId = sessionStorage.getItem('userId');
-        let data = {title: "New Board", statuses: "New, In Progress, Testing, Done", user_id: userId, type: true};
+        let data = {title: "New Private Board", statuses: "New, In Progress, Testing, Done", user_id: userId, type: true};
         this.ajaxWrapperWithReload(url, data, 'POST');
     },
     saveNewCard: function (boardId, orderNumber) {

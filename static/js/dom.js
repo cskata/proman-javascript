@@ -4,7 +4,7 @@ import {dataHandler} from "./data_handler.js";
 export let dom = {
     showBoards: function (boards) {
         for (let board of boards) {
-            templates.createBoardElement(board.title, board.statuses, board.id);
+            templates.createBoardElement(board.title, board.statuses, board.id, board.username);
             dom.showCards(board);
         }
     },

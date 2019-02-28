@@ -2,7 +2,7 @@ import {dom} from "./dom.js";
 import {dataHandler} from "./data_handler.js";
 
 export let templates = {
-    createBoardElement: function(boardTitle, boardStatuses, boardId) {
+    createBoardElement: function(boardTitle, boardStatuses, boardId, username) {
 
         let fullContent = document.querySelector('#full-content');
 
@@ -26,9 +26,12 @@ export let templates = {
         let boardBody = templates.createBoardBody(boardStatuses, boardId);
         templates.dragAndDropCards(boardBody, boardHeader);
 
+        let boardFooter = templates.createBoardFooter(boardId, username);
+
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
         board.appendChild(boardBody);
+        board.appendChild(boardFooter);
         fullContent.appendChild(board);
     },
     createBoardHeader: function (boardTitle, boardId) {
@@ -43,6 +46,15 @@ export let templates = {
         templates.editBoardTitle(boardHeader, boardId);
 
         return boardHeader
+    },
+    createBoardFooter: function (boardId, username) {
+        let boardFooter = document.createElement("div");
+        boardFooter.classList.add('board-footer');
+        boardFooter.innerHTML = `
+            <p>Created by: ${username}</p>
+            `;
+
+        return boardFooter;
     },
     editBoardTitle: function(boardHeader, boardId) {
         let title = boardHeader.querySelector('.board-title');
