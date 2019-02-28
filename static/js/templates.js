@@ -2,7 +2,7 @@ import {dom} from "./dom.js";
 import {dataHandler} from "./data_handler.js";
 
 export let templates = {
-    createBoardElement: function(boardTitle, boardStatuses, boardId, username, userId) {
+    createBoardElement: function (boardTitle, boardStatuses, boardId, username, userId) {
 
         let fullContent = document.querySelector('#full-content');
 
@@ -17,13 +17,13 @@ export let templates = {
         if (userId === loggedInUserId) {
             let newCardButton = templates.createNewCardButton();
             boardHeader.appendChild(newCardButton);
-            newCardButton.addEventListener('click', function(event) {
+            newCardButton.addEventListener('click', function (event) {
                 templates.handleNewCardButtonClick(event);
             });
 
             let deleteBoardButton = templates.createDeleteBoardButton();
             boardHeader.appendChild(deleteBoardButton);
-            deleteBoardButton.addEventListener("click", function(event) {
+            deleteBoardButton.addEventListener("click", function (event) {
                 templates.handleDeleteButtonClick(event);
             });
         }
@@ -62,7 +62,7 @@ export let templates = {
         boardFooter.classList.add('board-footer');
         const currentUser = sessionStorage.getItem('username');
 
-        if (currentUser === username)  {
+        if (currentUser === username) {
             boardFooter.innerHTML = `
             <p><i class="fas fa-unlock-alt"></i> Created by: ${username}</p>
             `;
@@ -73,14 +73,14 @@ export let templates = {
         }
         return boardFooter;
     },
-    editBoardTitle: function(boardHeader, boardId) {
+    editBoardTitle: function (boardHeader, boardId) {
         let title = boardHeader.querySelector('.board-title');
         title.dataset.boardTitle = title.innerHTML;
 
-        title.addEventListener('click', function() {
+        title.addEventListener('click', function () {
             title.setAttribute('contentEditable', 'true');
         });
-        title.addEventListener('keydown', function(event) {
+        title.addEventListener('keydown', function (event) {
             let enterKey = 13;
             let escKey = 27;
             if (event.which === enterKey) {
@@ -94,13 +94,13 @@ export let templates = {
             }
         });
     },
-    createNewCardButton: function() {
+    createNewCardButton: function () {
         let newCardButton = document.createElement('button');
         newCardButton.classList.add('new-card-button');
         newCardButton.innerHTML = 'Add New Card';
         return newCardButton
     },
-    handleNewCardButtonClick: function(event) {
+    handleNewCardButtonClick: function (event) {
         let boardButton = event.currentTarget;
         let board = boardButton.parentNode.parentNode;
         let boardId = board.dataset.boardId;
@@ -108,13 +108,13 @@ export let templates = {
         const orderNumber = (firstColumn.children.length) + 1;
         dataHandler.saveNewCard(boardId, orderNumber);
     },
-    createDeleteBoardButton: function() {
+    createDeleteBoardButton: function () {
         let deleteBoardButton = document.createElement('button');
         deleteBoardButton.classList.add('delete-board-button');
         deleteBoardButton.innerHTML = 'Delete Board';
         return deleteBoardButton
     },
-    handleDeleteButtonClick: function(event){
+    handleDeleteButtonClick: function (event) {
         let deleteButton = event.currentTarget;
         let board = deleteButton.parentNode.parentNode;
         let boardId = board.dataset.boardId;
@@ -148,28 +148,28 @@ export let templates = {
         }
         return tableHeader
     },
-    editTableHeader: function(cell, boardStatuses, boardId) {
-        cell.addEventListener('click', function(){
-               cell.setAttribute('contentEditable', 'true');
-            });
-            cell.addEventListener('keydown', function(event){
-                const enterKey = 13;
-                const escKey = 27;
-                if (event.which === enterKey){
-                    let cellId = boardStatuses.indexOf(cell.dataset.cellTitle);
-                    cell.setAttribute('contentEditable', 'false');
-                    cell.dataset.cellTitle = cell.innerHTML;
-                    boardStatuses[cellId] = cell.dataset.cellTitle;
-                    let newStatuses = boardStatuses.toString();
-                    dataHandler.updateStatuses(newStatuses, boardId);
-                }
-                if (event.which === escKey){
-                    cell.setAttribute('contentEditable', 'false');
-                    cell.innerHTML = cell.dataset.cellTitle;
-                }
-            });
+    editTableHeader: function (cell, boardStatuses, boardId) {
+        cell.addEventListener('click', function () {
+            cell.setAttribute('contentEditable', 'true');
+        });
+        cell.addEventListener('keydown', function (event) {
+            const enterKey = 13;
+            const escKey = 27;
+            if (event.which === enterKey) {
+                let cellId = boardStatuses.indexOf(cell.dataset.cellTitle);
+                cell.setAttribute('contentEditable', 'false');
+                cell.dataset.cellTitle = cell.innerHTML;
+                boardStatuses[cellId] = cell.dataset.cellTitle;
+                let newStatuses = boardStatuses.toString();
+                dataHandler.updateStatuses(newStatuses, boardId);
+            }
+            if (event.which === escKey) {
+                cell.setAttribute('contentEditable', 'false');
+                cell.innerHTML = cell.dataset.cellTitle;
+            }
+        });
     },
-    createTableBody: function(boardStatuses) {
+    createTableBody: function (boardStatuses) {
         let tableBody = document.createElement('tr');
         tableBody.classList.add('cards');
         for (let i = 0; i < boardStatuses.length; i++) {
@@ -179,7 +179,7 @@ export let templates = {
         }
         return tableBody
     },
-    createCardElement: function(cardTitle, cardId, orderNum, userId) {
+    createCardElement: function (cardTitle, cardId, orderNum, userId) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.setAttribute("data-order", orderNum);
@@ -196,15 +196,15 @@ export let templates = {
 
         return cardElement;
     },
-    editCardTitle: function(cardElement, cardId) {
+    editCardTitle: function (cardElement, cardId) {
         let firstPara = cardElement.querySelector("p:first-child");
         cardElement.dataset.cardTitle = firstPara.innerHTML;
-        firstPara.addEventListener('click', function(event) {
+        firstPara.addEventListener('click', function (event) {
             let card = event.target;
             card.contentEditable = true;
         });
 
-        cardElement.addEventListener('keydown', function(event) {
+        cardElement.addEventListener('keydown', function (event) {
             const enterKey = 13;
             const escKey = 27;
             let card = event.target;
@@ -220,37 +220,37 @@ export let templates = {
         });
         cardElement.dataset.cardId = cardId;
     },
-    createCardTrash: function(cardElement) {
+    createCardTrash: function (cardElement) {
         let trash = cardElement.querySelector(".fa-trash-alt");
-        trash.addEventListener("click", function(event) {
-           let clickedTrash = event.target;
-           if (clickedTrash.classList.contains("fa-trash-alt")){
-               let clickedCardId = clickedTrash.parentNode.parentNode.dataset.cardId;
-               dataHandler.deleteCard(clickedCardId);
-           }
+        trash.addEventListener("click", function (event) {
+            let clickedTrash = event.target;
+            if (clickedTrash.classList.contains("fa-trash-alt")) {
+                let clickedCardId = clickedTrash.parentNode.parentNode.dataset.cardId;
+                dataHandler.deleteCard(clickedCardId);
+            }
         });
     },
-    dragAndDropCards: function(boardBody, boardHeader) {
+    dragAndDropCards: function (boardBody, boardHeader) {
         let classNames = boardBody.getElementsByTagName('td');
         let dragSelector = Array.from(classNames);
         dragula(dragSelector).on("drop", function (element, target, source) {
             boardBody.style.height = `auto`;
-            for (let i = 0; i < source.childNodes.length; i++){
+            for (let i = 0; i < source.childNodes.length; i++) {
                 let card = source.childNodes[i];
                 let cardOrderId = i + 1;
                 card.dataset.order = `${cardOrderId}`;
                 let status = source.dataset.status;
                 let cardId = card.dataset.cardId;
-                let data = {order : cardOrderId, status: status, cardId: cardId};
+                let data = {order: cardOrderId, status: status, cardId: cardId};
                 dataHandler.updateCardOrder(data);
             }
-            for (let i = 0; i < target.childNodes.length; i++){
+            for (let i = 0; i < target.childNodes.length; i++) {
                 let card = target.childNodes[i];
                 let cardOrderId = i + 1;
                 card.dataset.order = `${cardOrderId}`;
                 let status = target.dataset.status;
                 let cardId = card.dataset.cardId;
-                let data = {order : cardOrderId, status: status, cardId: cardId};
+                let data = {order: cardOrderId, status: status, cardId: cardId};
                 dataHandler.updateCardOrder(data);
             }
             let table = boardBody.querySelector(".board-data");
