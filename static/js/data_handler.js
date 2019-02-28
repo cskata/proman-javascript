@@ -28,7 +28,7 @@ export let dataHandler = {
     saveNewCard: function (boardId, orderNumber) {
         let url = '/cards';
         let data = {title: "New Card", board_id: boardId, status_id: 1, order_num: orderNumber};
-        this.ajaxWrapperWithoutReload(url, data, 'POST');
+        this.ajaxWrapperWithReload(url, data, 'POST');
     },
     deleteCard: function (clickedCardId) {
         let url = '/cards';

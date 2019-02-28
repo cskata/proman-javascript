@@ -78,10 +78,6 @@ export let templates = {
         let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] .cards > :first-child`);
         const orderNumber = (firstColumn.children.length) + 1;
         dataHandler.saveNewCard(boardId, orderNumber);
-
-        let fullContent = document.querySelector("#full-content");
-        fullContent.innerHTML = "";
-        dataHandler.getBoards();
     },
     createDeleteBoardButton: function() {
         let deleteBoardButton = document.createElement('button');
