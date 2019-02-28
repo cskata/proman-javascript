@@ -9,7 +9,7 @@ html, body {
 }
 
 nav {
-    height: 50px;
+    height: 60px;
     background-color: rgb(8, 76, 102);
     color: lavender;
     line-height: 50px;
@@ -36,7 +36,11 @@ nav span {
 .board-header {
     background-color: rgba(255, 255, 255, 0.7);
     padding: 20px;
-    border: 1px solid black;
+    height: 60px;
+    border-bottom: none;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
     cursor: pointer;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -56,20 +60,18 @@ nav span {
 
 .board-body {
     background-color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 20px;
     -webkit-transition: all 0.6s ease-out;
     transition: all 0.6s ease-out;
     height: auto;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top: none;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 
 .board-data {
-    border: 1px solid black;
     border-spacing: 0;
-    border-top: none;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top: 1px solid black;
 }
 
 .board-data th, .board-data td {
@@ -109,16 +111,17 @@ nav span {
 }
 
 @-webkit-keyframes hvr-icon-pop {
-  50% {
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
-  }
+    50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    }
 }
+
 @keyframes hvr-icon-pop {
-  50% {
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
-  }
+    50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    }
 }
 
 .fa-trash-alt {
@@ -149,7 +152,7 @@ nav span {
 
 button {
     margin-left: 20px;
-    padding: 10px 20px;
+    padding: 5px 20px;
     background: rgb(8, 76, 102);
     color: white;
     border: none;
@@ -164,7 +167,7 @@ button:hover {
     cursor: pointer;
 }
 
-#new-board-button {
+nav #new-board-button, #new-private-board-button, #registration, #login, #logout, #submitButton {
     position: relative;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
@@ -175,10 +178,13 @@ button:hover {
     display: inline-block;
     border: 1px solid #fff;
     float: right;
-    top: 5px
+    top: 5px;
+    padding: 5px 20px;
+    line-height: 20px;
 }
 
-#new-board-button::before {
+#new-board-button::before, #new-private-board-button::before, #registration::before,
+#login::before, #logout::before, #submitButton::before {
     content: "";
     border-radius: 10px;
     position: absolute;
@@ -198,7 +204,8 @@ button:hover {
     transition-timing-function: ease-out;
 }
 
-#new-board-button:hover::before {
+#new-board-button:hover::before, #new-private-board-button:hover::before, #registration:hover::before,
+#login:hover::before, #logout:hover::before, #submitButton:hover::before {
     border-radius: 10px;
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -289,11 +296,75 @@ button:hover {
     float: left;
 }
 
+.board-footer {
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.board-footer p {
+    margin: 0;
+    line-height: 20px;
+    padding: 20px 15px;
+    font-size: 14px;
+}
+
+.board-footer .fa-unlock-alt, .board-footer .fa-lock {
+    font-size: 16px;
+    padding-right: 5px;
+    color: rgb(8, 76, 102);
+}
+
+#modal {
+    background: url("../images/background.jpg") repeat;
+}
+
+.modal-header {
+    background-color: rgb(8, 76, 102);
+}
+
+.modal-header button #close-x {
+    color: lavender;
+    font-size: 40px;
+}
+
+#modal-title {
+    font-family: 'Fredericka the Great', cursive;
+    color: lavender;
+    font-size: 35px;
+}
+
+.modal-body {
+    padding-top: 40px;
+    text-align: center;
+    color: rgb(8, 76, 102);
+    background-color: lavender;
+}
+
+.modal-body label {
+    font-weight: bold;
+}
+
+#submitButton {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 25px;
+}
+
+.modal-footer {
+    background-color: lavender;
+    border-top: 6px double rgb(8, 76, 102) !important;
+}
+
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 40px;
+    height: 60px;
     background-color: rgb(8, 76, 102);
     color: lavender;
     line-height: 40px;

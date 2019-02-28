@@ -1,8 +1,9 @@
-from flask import Flask, render_template, jsonify, request, json
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for, json
 import data_manager
-
+import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(128)
 
 
 @app.route("/")
@@ -12,7 +13,10 @@ def route_index():
 
 @app.route("/boards", methods=['GET'])
 def get_boards():
-    boards = data_manager.get_boards()
+    if 'username' in session:
+        boards = data_manager.get_private_boards(session["username"])
+    else:
+        boards = data_manager.get_public_boards()
     return jsonify(boards)
 
 
@@ -70,6 +74,32 @@ def update_card_order():
     data = request.get_json()
     data_manager.update_card_order(data)
     return "", 204
+
+
+@app.route('/registration', methods=['POST'])
+def register():
+    data = request.get_json()
+    if data_manager.register_user(data):
+        return jsonify(error="")
+    else:
+        return jsonify(error="error")
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    user_data = request.get_json()
+    if data_manager.check_login(user_data):
+        session['username'] = user_data['username']
+        user_id = data_manager.get_user_id(user_data['username'])
+        return jsonify(username=session["username"], user_id=user_id)
+    else:
+        return jsonify(error="error")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return "", 200
 
 
 def main():
