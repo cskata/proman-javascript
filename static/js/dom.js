@@ -81,18 +81,24 @@ export let dom = {
         const password = document.querySelector('#password');
         const submitButton = document.querySelector('#submitButton');
         regButton.addEventListener('click', function (event) {
+            dom.giveAutofocus();
             modalTitle.innerHTML = "Registration";
             submitButton.dataset.status = 'registration';
             username.value = "";
             password.value = "";
         });
         logButton.addEventListener('click', function (event) {
+            dom.giveAutofocus();
             modalTitle.innerHTML = "Login";
             submitButton.dataset.status = 'login';
             username.value = "";
             password.value = "";
         });
-
+    },
+    giveAutofocus: function() {
+        $('#modal').on('shown.bs.modal', function () {
+                $('#username').focus();
+            });
     },
     registerOrLoginUser: function() {
         const username = document.querySelector('#username');

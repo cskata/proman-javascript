@@ -111,16 +111,17 @@ nav span {
 }
 
 @-webkit-keyframes hvr-icon-pop {
-  50% {
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
-  }
+    50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    }
 }
+
 @keyframes hvr-icon-pop {
-  50% {
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
-  }
+    50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    }
 }
 
 .fa-trash-alt {
@@ -166,7 +167,7 @@ button:hover {
     cursor: pointer;
 }
 
-nav #new-board-button, #new-private-board-button, #registration, #login, #logout {
+nav #new-board-button, #new-private-board-button, #registration, #login, #logout, #submitButton {
     position: relative;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
@@ -183,7 +184,7 @@ nav #new-board-button, #new-private-board-button, #registration, #login, #logout
 }
 
 #new-board-button::before, #new-private-board-button::before, #registration::before,
-#login::before, #logout::before{
+#login::before, #logout::before, #submitButton::before {
     content: "";
     border-radius: 10px;
     position: absolute;
@@ -204,7 +205,7 @@ nav #new-board-button, #new-private-board-button, #registration, #login, #logout
 }
 
 #new-board-button:hover::before, #new-private-board-button:hover::before, #registration:hover::before,
-#login:hover::before, #logout:hover::before{
+#login:hover::before, #logout:hover::before, #submitButton:hover::before {
     border-radius: 10px;
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -304,15 +305,59 @@ nav #new-board-button, #new-private-board-button, #registration, #login, #logout
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
 .board-footer p {
     margin: 0;
     line-height: 20px;
     padding: 20px 15px;
     font-size: 14px;
 }
+
 .board-footer .fa-unlock-alt, .board-footer .fa-lock {
     font-size: 16px;
     padding-right: 5px;
+    color: rgb(8, 76, 102);
+}
+
+#modal {
+    background: url("../images/background.jpg") repeat;
+}
+
+.modal-header {
+    background-color: rgb(8, 76, 102);
+}
+
+.modal-header button #close-x {
+    color: lavender;
+    font-size: 40px;
+}
+
+#modal-title {
+    font-family: 'Fredericka the Great', cursive;
+    color: lavender;
+    font-size: 35px;
+}
+
+.modal-body {
+    padding-top: 40px;
+    text-align: center;
+    color: rgb(8, 76, 102);
+    background-color: lavender;
+}
+
+.modal-body label {
+    font-weight: bold;
+}
+
+#submitButton {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 25px;
+}
+
+.modal-footer {
+    background-color: lavender;
+    border-top: 6px double rgb(8, 76, 102) !important;
 }
 
 footer {
