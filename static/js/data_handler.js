@@ -142,6 +142,7 @@ export let dataHandler = {
                     window.location.href = ('/');
                 } else {
                     alert("Sorry, incorrect username or password!");
+                    document.querySelector("#login").click();
                 }
             });
     },
