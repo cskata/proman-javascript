@@ -8,8 +8,8 @@ DROP TABLE IF EXISTS public.users;
 CREATE TABLE users
 (
   id       serial NOT NULL,
-  username    varchar(255),
-  password varchar(255)
+  username    varchar(255) UNIQUE NOT NULL,
+  password varchar(255) UNIQUE NOT NULL
 );
 
 ALTER TABLE ONLY users
