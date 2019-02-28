@@ -71,7 +71,7 @@ export let dataHandler = {
     },
     handleRegistration: function (data) {
         let url = '/registration';
-        this.ajaxWrapperWithReload(url, data, 'POST')
+        this.ajaxRegistration(url, data, 'POST')
     },
     handleLogin: function (data) {
         let url = '/login';
@@ -106,7 +106,25 @@ export let dataHandler = {
                 console.log('Success:', JSON.stringify(response));
             });
     },
-    ajaxLogin: function (url, data, method) {
+    ajaxRegistration: function(url, data, method) {
+        fetch(url, {
+            method: method,
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then((obj) => {
+                console.log(obj.error);
+                if (obj.error === "error") {
+                    alert("Sorry, this username is already taken.");
+                } else {
+                    window.location.href = ('/');
+                }
+            });
+    },
+    ajaxLogin: function(url, data, method) {
         fetch(url, {
             method: method,
             body: JSON.stringify(data),

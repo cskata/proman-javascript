@@ -79,8 +79,10 @@ def update_card_order():
 @app.route('/registration', methods=['POST'])
 def register():
     data = request.get_json()
-    data_manager.register_user(data)
-    return "", 204
+    if data_manager.register_user(data):
+        return jsonify(error="")
+    else:
+        return jsonify(error="error")
 
 
 @app.route('/login', methods=['POST'])

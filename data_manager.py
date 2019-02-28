@@ -112,10 +112,14 @@ def update_card_order(cursor, data):
 @connection_handler
 def register_user(cursor, data):
     data["password"] = hash_password(data["password"])
-    cursor.execute("""
-                    INSERT INTO users (username, password)
-                    VALUES (%(username)s, %(password)s);
-                    """, data)
+    try:
+        cursor.execute("""
+                        INSERT INTO users (username, password)
+                        VALUES (%(username)s, %(password)s);
+                        """, data)
+        return True
+    except:
+        return False
 
 
 @connection_handler
