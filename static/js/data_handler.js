@@ -3,64 +3,71 @@ import {dom} from "./dom.js";
 export let dataHandler = {
     keyInLocalStorage: 'proman-data',
     _data: {},
-    reloadContent: function(){
+    reloadContent: function () {
         let fullContent = document.querySelector("#full-content");
         fullContent.innerHTML = "";
         dataHandler.getBoards();
     },
     getBoards: function () {
         fetch('/boards')
-        .then((response) => response.json())
-        .then((response) => dom.showBoards(response) )
+            .then((response) => response.json())
+            .then((response) => dom.showBoards(response))
     },
-    saveNewBoard: function() {
+    saveNewPublicBoard: function () {
         let url = '/boards';
-        let data = {title: "New Board", statuses: "New, In Progress, Testing, Done"};
+        let userId = sessionStorage.getItem('userId');
+        let data = {title: "New Board", statuses: "New, In Progress, Testing, Done", user_id: userId, type: false};
         this.ajaxWrapperWithReload(url, data, 'POST');
     },
-    saveNewCard: function(boardId, orderNumber) {
+    saveNewPrivateBoard: function () {
+        let url = '/boards';
+        let userId = sessionStorage.getItem('userId');
+        let data = {title: "New Board", statuses: "New, In Progress, Testing, Done", user_id: userId, type: true};
+        this.ajaxWrapperWithReload(url, data, 'POST');
+    },
+    saveNewCard: function (boardId, orderNumber) {
         let url = '/cards';
         let data = {title: "New Card", board_id: boardId, status_id: 1, order_num: orderNumber};
         this.ajaxWrapperWithoutReload(url, data, 'POST');
     },
-    deleteCard: function(clickedCardId){
+    deleteCard: function (clickedCardId) {
         let url = '/cards';
         let data = {card_id: clickedCardId};
         this.ajaxWrapperWithReload(url, data, 'DELETE');
     },
-    deleteBoard: function(board_id){
+    deleteBoard: function (board_id) {
         let url = '/boards';
         let data = {board_id: board_id};
         this.ajaxWrapperWithReload(url, data, 'DELETE');
     },
-    updateBoard: function(board_id, new_title){
+    updateBoard: function (board_id, new_title) {
         let url = '/boards';
         let data = {id: board_id, new_title: new_title};
         this.ajaxWrapperWithoutReload(url, data, 'PUT');
     },
-    updateCard: function(card_id, new_title){
+    updateCard: function (card_id, new_title) {
         let url = '/cards';
         let data = {id: card_id, new_title: new_title};
         this.ajaxWrapperWithoutReload(url, data, 'PUT');
     },
-    updateStatuses: function(statuses, id) {
+    updateStatuses: function (statuses, id) {
         let url = '/statuses';
         let data = {statuses: statuses, id: id};
         this.ajaxWrapperWithoutReload(url, data, 'PUT');
     },
-    updateCardOrder: function(data) {
+    updateCardOrder: function (data) {
         let url = '/card-order-update';
         this.ajaxWrapperWithoutReload(url, data, 'PUT');
     },
-    handleRegistration: function(data) {
+    handleRegistration: function (data) {
         let url = '/registration';
         this.ajaxWrapperWithReload(url, data, 'POST')
     },
-    handleLogin: function(data) {
+    handleLogin: function (data) {
         let url = '/login';
-        this.ajaxWrapperWithRefresh(url, data, 'POST')
+        this.ajaxLogin(url, data, 'POST')
     },
-    handleLogout: function() {
+    handleLogout: function () {
         let url = '/logout';
         this.ajaxLogout(url);
     },
@@ -89,7 +96,7 @@ export let dataHandler = {
                 console.log('Success:', JSON.stringify(response));
             });
     },
-    ajaxWrapperWithRefresh: function (url, data, method) {
+    ajaxLogin: function (url, data, method) {
         fetch(url, {
             method: method,
             body: JSON.stringify(data),
@@ -102,18 +109,20 @@ export let dataHandler = {
                 console.log(obj.username, obj.error);
                 if (obj.username) {
                     sessionStorage.setItem("username", obj.username);
+                    sessionStorage.setItem("userId", obj['user_id']);
                     window.location.href = ('/');
                 } else {
                     alert("Sorry, incorrect username or password!");
                 }
             });
     },
-    ajaxLogout: function(url) {
+    ajaxLogout: function (url) {
         fetch(url)
-        .then((response) => {
-            console.log(response);
-            sessionStorage.removeItem("username");
-            window.location.href = ('/');
-        })
+            .then((response) => {
+                console.log(response);
+                sessionStorage.removeItem("username");
+                sessionStorage.removeItem("userId");
+                window.location.href = ('/');
+            })
     }
 };

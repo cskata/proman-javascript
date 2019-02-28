@@ -85,7 +85,8 @@ def login():
     user_data = request.get_json()
     if data_manager.check_login(user_data):
         session['username'] = user_data['username']
-        return jsonify(username=session["username"])
+        user_id = data_manager.get_user_id(user_data['username'])
+        return jsonify(username=session["username"], user_id=user_id)
     else:
         return jsonify(error="error")
 

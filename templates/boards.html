@@ -11,7 +11,8 @@
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
-    <script type='module' src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <script id="main-script" type='module' src="static/js/main.js?v=2.1" defer></script>
+{#    <script type='module' src="{{ url_for('static', filename='js/main.js') }}" defer></script>#}
     <script type='module' src="{{ url_for('static', filename='js/jquery.js') }}" defer></script>
     <script type='module' src="{{ url_for('static', filename='js/popper.js') }}" defer></script>
     <script type='module' src="{{ url_for('static', filename='js/bootstrap.min.js') }}" defer></script>
@@ -24,8 +25,9 @@
 <body>
 <nav>
     <span>Proman</span>
-    <button id="new-board-button">Create New Board</button>
     {% if session["username"] %}
+        <button id="new-board-button">Add Public Board</button>
+        <button id="new-private-board-button">Add Private Board</button>
         <button type="button" id="logout" class="btn btn-primary">Logout</button>
     {% else %}
     <!-- Button trigger modal -->
