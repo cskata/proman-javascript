@@ -81,6 +81,12 @@ export let dataHandler = {
         let url = '/logout';
         this.ajaxLogout(url);
     },
+    emptyInputFields: function() {
+        const username = document.querySelector('#username');
+        const password = document.querySelector('#password');
+        username.value = "";
+        password.value = "";
+    },
     ajaxWrapperWithReload: function (url, data, method) {
         fetch(url, {
             method: method,
@@ -119,7 +125,8 @@ export let dataHandler = {
                 console.log(obj.error);
                 if (obj.error === "error") {
                     alert("Sorry, this username is already taken.");
-                    document.querySelector("#registration").click();
+                    this.emptyInputFields();
+                    //document.querySelector("#registration").click();
                 } else {
                     window.location.href = ('/');
                 }
@@ -142,6 +149,7 @@ export let dataHandler = {
                     window.location.href = ('/');
                 } else {
                     alert("Sorry, incorrect username or password!");
+                    this.emptyInputFields();
                 }
             });
     },
