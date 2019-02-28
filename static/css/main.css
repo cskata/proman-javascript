@@ -9,7 +9,7 @@ html, body {
 }
 
 nav {
-    height: 50px;
+    height: 70px;
     background-color: rgb(8, 76, 102);
     color: lavender;
     line-height: 50px;
@@ -164,7 +164,7 @@ button:hover {
     cursor: pointer;
 }
 
-#new-board-button, #new-private-board-button {
+nav #new-board-button, #new-private-board-button, #registration, #login, #logout {
     position: relative;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
@@ -175,10 +175,12 @@ button:hover {
     display: inline-block;
     border: 1px solid #fff;
     float: right;
-    top: 5px
+    top: 5px;
+    padding: 10px 20px;
+    line-height: 20px;
 }
 
-#new-board-button::before {
+#new-board-button::before, #new-private-board-button::before {
     content: "";
     border-radius: 10px;
     position: absolute;
@@ -198,7 +200,7 @@ button:hover {
     transition-timing-function: ease-out;
 }
 
-#new-board-button:hover::before {
+#new-board-button:hover::before, #new-private-board-button:hover::before {
     border-radius: 10px;
     -webkit-transform: scale(1);
     transform: scale(1);
