@@ -50,10 +50,17 @@ export let templates = {
     createBoardFooter: function (boardId, username) {
         let boardFooter = document.createElement("div");
         boardFooter.classList.add('board-footer');
-        boardFooter.innerHTML = `
-            <p>Created by: ${username}</p>
-            `;
+        const currentUser = sessionStorage.getItem('username');
 
+        if (currentUser === username)  {
+            boardFooter.innerHTML = `
+            <p><i class="fas fa-unlock-alt"></i> Created by: ${username}</p>
+            `;
+        } else {
+            boardFooter.innerHTML = `
+            <p><i class="fas fa-lock"></i> Created by: ${username}</p>
+            `;
+        }
         return boardFooter;
     },
     editBoardTitle: function(boardHeader, boardId) {
