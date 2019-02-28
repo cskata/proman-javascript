@@ -4,15 +4,15 @@ import {dataHandler} from "./data_handler.js";
 export let dom = {
     showBoards: function (boards) {
         for (let board of boards) {
-            templates.createBoardElement(board.title, board.statuses, board.id, board.username);
-            dom.showCards(board);
+            templates.createBoardElement(board.title, board.statuses, board.id, board.username, board.user_id);
+            dom.showCards(board, board.user_id);
         }
     },
-    showCards: function (board) {
+    showCards: function (board, userId) {
         let cards = board.cards;
         for (let i = 0; i < cards.length; i++) {
             let column = dom.addCard(board, cards[i]);
-            let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num);
+            let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num, userId);
             column.appendChild(cardElement);
         }
     },

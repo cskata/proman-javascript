@@ -36,6 +36,7 @@ nav span {
 .board-header {
     background-color: rgba(255, 255, 255, 0.7);
     padding: 20px;
+    height: 60px;
     border-bottom: none;
     border-top: 1px solid black;
     border-left: 1px solid black;

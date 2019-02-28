@@ -7,10 +7,23 @@ import bcrypt
 def get_public_boards(cursor):
     cursor.execute("""
                     SELECT boards.*, users.username FROM boards 
-                    LEFT JOIN users ON boards.user_id = users.id
+                    JOIN users ON boards.user_id = users.id
                     WHERE type = FALSE
                     ORDER BY boards.id;
                     """)
+    boards = cursor.fetchall()
+    format_boards_with_cards(boards)
+    return boards
+
+
+@connection_handler
+def get_private_boards(cursor, username):
+    cursor.execute("""
+                    SELECT boards.*, users.username FROM boards
+                    JOIN users ON boards.user_id = users.id
+                    WHERE username = %(username)s
+                    ORDER BY boards.id;
+                    """, {"username": username})
     boards = cursor.fetchall()
     format_boards_with_cards(boards)
     return boards

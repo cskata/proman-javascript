@@ -2,29 +2,37 @@ import {dom} from "./dom.js";
 import {dataHandler} from "./data_handler.js";
 
 export let templates = {
-    createBoardElement: function(boardTitle, boardStatuses, boardId, username) {
+    createBoardElement: function(boardTitle, boardStatuses, boardId, username, userId) {
 
         let fullContent = document.querySelector('#full-content');
 
         let board = document.createElement('div');
         board.classList.add('board');
         board.dataset.boardId = boardId;
+        board.dataset.userId = userId;
 
-        let boardHeader = templates.createBoardHeader(boardTitle, boardId);
-        let newCardButton = templates.createNewCardButton();
-        boardHeader.appendChild(newCardButton);
-        newCardButton.addEventListener('click', function(event) {
-            templates.handleNewCardButtonClick(event);
-        });
+        let loggedInUserId = parseInt(sessionStorage.getItem("userId"));
+        let boardHeader = templates.createBoardHeader(boardTitle, boardId, loggedInUserId, userId);
 
-        let deleteBoardButton = templates.createDeleteBoardButton();
-        boardHeader.appendChild(deleteBoardButton);
-        deleteBoardButton.addEventListener("click", function(event) {
-            templates.handleDeleteButtonClick(event);
-        });
+        if (userId === loggedInUserId) {
+            let newCardButton = templates.createNewCardButton();
+            boardHeader.appendChild(newCardButton);
+            newCardButton.addEventListener('click', function(event) {
+                templates.handleNewCardButtonClick(event);
+            });
 
-        let boardBody = templates.createBoardBody(boardStatuses, boardId);
-        templates.dragAndDropCards(boardBody, boardHeader);
+            let deleteBoardButton = templates.createDeleteBoardButton();
+            boardHeader.appendChild(deleteBoardButton);
+            deleteBoardButton.addEventListener("click", function(event) {
+                templates.handleDeleteButtonClick(event);
+            });
+        }
+
+        let boardBody = templates.createBoardBody(boardStatuses, boardId, loggedInUserId, userId);
+
+        if (userId === loggedInUserId) {
+            templates.dragAndDropCards(boardBody, boardHeader);
+        }
 
         let boardFooter = templates.createBoardFooter(boardId, username);
 
@@ -34,7 +42,7 @@ export let templates = {
         board.appendChild(boardFooter);
         fullContent.appendChild(board);
     },
-    createBoardHeader: function (boardTitle, boardId) {
+    createBoardHeader: function (boardTitle, boardId, loggedInUserId, userId) {
         let boardHeader = document.createElement("div");
         boardHeader.classList.add('board-header');
         boardHeader.innerHTML = `
@@ -43,7 +51,9 @@ export let templates = {
             `;
 
         boardHeader.dataset.tableIsOpen = 'true';
-        templates.editBoardTitle(boardHeader, boardId);
+        if (userId === loggedInUserId) {
+            templates.editBoardTitle(boardHeader, boardId);
+        }
 
         return boardHeader
     },
@@ -110,13 +120,13 @@ export let templates = {
         let boardId = board.dataset.boardId;
         dataHandler.deleteBoard(boardId);
     },
-    createBoardBody: function (boardStatuses, boardId) {
+    createBoardBody: function (boardStatuses, boardId, loggedInUserId, userId) {
         let boardBody = document.createElement("div");
         boardBody.classList.add('board-body');
 
         let table = document.createElement('table');
         table.classList.add('board-data');
-        let tableHeader = templates.createTableHeader(boardStatuses, boardId);
+        let tableHeader = templates.createTableHeader(boardStatuses, boardId, loggedInUserId, userId);
         let tableBody = templates.createTableBody(boardStatuses);
         table.appendChild(tableHeader);
         table.appendChild(tableBody);
@@ -124,14 +134,16 @@ export let templates = {
         boardBody.appendChild(table);
         return boardBody
     },
-    createTableHeader: function (boardStatuses, boardId) {
+    createTableHeader: function (boardStatuses, boardId, loggedInUserId, userId) {
         let tableHeader = document.createElement('tr');
         tableHeader.classList.add('statuses');
         for (const status of boardStatuses) {
             let cell = document.createElement('th');
             cell.innerHTML = `${status}`;
             cell.dataset.cellTitle = cell.innerHTML;
-            templates.editTableHeader(cell, boardStatuses, boardId);
+            if (loggedInUserId === userId) {
+                templates.editTableHeader(cell, boardStatuses, boardId);
+            }
             tableHeader.appendChild(cell);
         }
         return tableHeader
@@ -167,15 +179,21 @@ export let templates = {
         }
         return tableBody
     },
-    createCardElement: function(cardTitle, cardId, orderNum) {
+    createCardElement: function(cardTitle, cardId, orderNum, userId) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.setAttribute("data-order", orderNum);
-        cardElement.innerHTML = `<p>${cardTitle}</p>
-                                 <p><i class="fas fa-trash-alt" title="Delete Card"></i></p>`;
+        cardElement.innerHTML = `<p>${cardTitle}</p>`;
 
-        templates.editCardTitle(cardElement, cardId);
-        templates.createCardTrash(cardElement);
+        let loggedInUserId = parseInt(sessionStorage.getItem("userId"));
+
+        if (userId === loggedInUserId) {
+            cardElement.innerHTML = `<p>${cardTitle}</p>
+                                 <p><i class="fas fa-trash-alt" title="Delete Card"></i></p>`;
+            templates.editCardTitle(cardElement, cardId);
+            templates.createCardTrash(cardElement);
+        }
+
         return cardElement;
     },
     editCardTitle: function(cardElement, cardId) {

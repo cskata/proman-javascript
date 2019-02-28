@@ -6,9 +6,9 @@ export let dataHandler = {
     reloadContent: function () {
         let fullContent = document.querySelector("#full-content");
         fullContent.innerHTML = "";
-        dataHandler.getBoards();
+        dataHandler.getPublicBoards();
     },
-    getBoards: function () {
+    getPublicBoards: function () {
         fetch('/boards')
             .then((response) => response.json())
             .then((response) => dom.showBoards(response))

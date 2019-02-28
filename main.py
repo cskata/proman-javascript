@@ -13,7 +13,10 @@ def route_index():
 
 @app.route("/boards", methods=['GET'])
 def get_boards():
-    boards = data_manager.get_public_boards()
+    if 'username' in session:
+        boards = data_manager.get_private_boards(session["username"])
+    else:
+        boards = data_manager.get_public_boards()
     return jsonify(boards)
 
 

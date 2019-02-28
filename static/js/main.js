@@ -2,7 +2,7 @@ import {dataHandler} from "./data_handler.js";
 import {dom} from "./dom.js";
 
 function init() {
-    dataHandler.getBoards();
+    dataHandler.getPublicBoards();
 
     const user = sessionStorage.getItem("username");
     if (user) {
