@@ -56,20 +56,15 @@ nav span {
 
 .board-body {
     background-color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 20px;
     -webkit-transition: all 0.6s ease-out;
     transition: all 0.6s ease-out;
     height: auto;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 .board-data {
     border: 1px solid black;
     border-spacing: 0;
     border-top: none;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 .board-data th, .board-data td {
@@ -291,6 +286,22 @@ nav #new-board-button, #new-private-board-button, #registration, #login, #logout
 
 .board-title {
     float: left;
+}
+
+.board-footer {
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.board-footer p {
+    margin: 0;
+    line-height: 20px;
+    padding: 20px 15px;
+    font-size: 14px;
 }
 
 footer {
