@@ -119,6 +119,7 @@ export let dataHandler = {
                 console.log(obj.error);
                 if (obj.error === "error") {
                     alert("Sorry, this username is already taken.");
+                    document.querySelector("#registration").click();
                 } else {
                     window.location.href = ('/');
                 }
