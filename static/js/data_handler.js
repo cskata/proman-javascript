@@ -126,7 +126,6 @@ export let dataHandler = {
                 if (obj.error === "error") {
                     alert("Sorry, this username is already taken.");
                     this.emptyInputFields();
-                    //document.querySelector("#registration").click();
                 } else {
                     window.location.href = ('/');
                 }
