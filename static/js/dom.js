@@ -2,17 +2,18 @@ import {templates} from "./templates.js";
 import {dataHandler} from "./data_handler.js";
 
 export let dom = {
-    showBoards: function (boards) {
+    showBoards: function(boards) {
         for (let board of boards) {
-            templates.createBoardElement(board.title, board.statuses, board.id, board.username, board.user_id);
-            dom.showCards(board, board.user_id);
+            templates.createBoardElement(board.title, board.statuses, board.id, board.username, board["user_id"]);
+            dom.showCards(board);
         }
     },
-    showCards: function (board, userId) {
+    showCards: function(board) {
         let cards = board.cards;
+        let loggedInUser = document.querySelector("#full-content").dataset.state;
         for (let i = 0; i < cards.length; i++) {
             let column = dom.addCard(board, cards[i]);
-            let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num, userId);
+            let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num, loggedInUser);
             column.appendChild(cardElement);
         }
     },
@@ -80,14 +81,14 @@ export let dom = {
         const username = document.querySelector('#username');
         const password = document.querySelector('#password');
         const submitButton = document.querySelector('#submitButton');
-        regButton.addEventListener('click', function (event) {
+        regButton.addEventListener('click', function(event) {
             dom.giveAutofocus();
             modalTitle.innerHTML = "Registration";
             submitButton.dataset.status = 'registration';
             username.value = "";
             password.value = "";
         });
-        logButton.addEventListener('click', function (event) {
+        logButton.addEventListener('click', function(event) {
             dom.giveAutofocus();
             modalTitle.innerHTML = "Login";
             submitButton.dataset.status = 'login';

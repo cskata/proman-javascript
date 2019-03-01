@@ -23,6 +23,7 @@ def get_boards():
 @app.route("/boards", methods=['POST'])
 def save_board():
     data = request.get_json()
+    data["user_id"] = session["user_id"]
     data_manager.add_new_board(data)
     return "", 204
 
@@ -91,7 +92,8 @@ def login():
     if data_manager.check_login(user_data):
         session['username'] = user_data['username']
         user_id = data_manager.get_user_id(user_data['username'])
-        return jsonify(username=session["username"], user_id=user_id)
+        session['user_id'] = user_id
+        return jsonify(state="loggedIn")
     else:
         return jsonify(error="error")
 

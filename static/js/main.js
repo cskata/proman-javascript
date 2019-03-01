@@ -4,15 +4,15 @@ import {dom} from "./dom.js";
 function init() {
     dataHandler.getPublicBoards();
 
-    const user = sessionStorage.getItem("username");
-    if (user) {
+    const fullContent = document.querySelector("#full-content");
+    if (fullContent.dataset.state) {
         const addNewPublicBoard = document.querySelector('#new-board-button');
-        addNewPublicBoard.addEventListener('click', function () {
+        addNewPublicBoard.addEventListener('click', function() {
             dataHandler.saveNewPublicBoard();
         });
 
         const addNewPrivateBoard = document.querySelector('#new-private-board-button');
-        addNewPrivateBoard.addEventListener('click', function () {
+        addNewPrivateBoard.addEventListener('click', function() {
             dataHandler.saveNewPrivateBoard();
         });
 
@@ -23,4 +23,6 @@ function init() {
     }
 }
 
-window.onload = init;
+window.addEventListener("load", function(event) {
+   init();
+});
