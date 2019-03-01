@@ -41,8 +41,11 @@
                 </button>
             {% endif %}
         </nav>
-        <main id="full-content" data-state="{{ session['username'] }}">
-        </main>
+        {% if session["username"] %}
+            <main id="full-content" data-state="logged-in"></main>
+        {% else %}
+            <main id="full-content" data-state=""></main>
+        {% endif %}
         <footer>
             <p>© Copyright - Backend Boys</p>
         </footer>

@@ -4,14 +4,14 @@ import {dataHandler} from "./data_handler.js";
 export let templates = {
     createBoardElement: function (boardTitle, boardStatuses, boardId, username, userId) {
         let fullContent = document.querySelector('#full-content');
-        let loggedInUser = fullContent.dataset.state;
+        let loggedIn = fullContent.dataset.state;
         let board = document.createElement('div');
         board.classList.add('board');
         board.dataset.boardId = boardId;
         board.dataset.userId = userId;
 
-        let boardHeader = templates.createBoardHeader(boardTitle, boardId, loggedInUser);
-        if (loggedInUser) {
+        let boardHeader = templates.createBoardHeader(boardTitle, boardId, loggedIn);
+        if (loggedIn) {
             let newCardButton = templates.createNewCardButton();
             boardHeader.appendChild(newCardButton);
             newCardButton.addEventListener('click', function(event) {
@@ -25,12 +25,12 @@ export let templates = {
             });
         }
 
-        let boardBody = templates.createBoardBody(boardStatuses, boardId, loggedInUser);
-        if (loggedInUser) {
+        let boardBody = templates.createBoardBody(boardStatuses, boardId, loggedIn);
+        if (loggedIn) {
             templates.dragAndDropCards(boardBody, boardHeader);
         }
 
-        let boardFooter = templates.createBoardFooter(loggedInUser, username);
+        let boardFooter = templates.createBoardFooter(loggedIn, username);
 
         board.appendChild(boardHeader);
         boardHeader.addEventListener('click', dom.toggleBoard);
@@ -38,7 +38,7 @@ export let templates = {
         board.appendChild(boardFooter);
         fullContent.appendChild(board);
     },
-    createBoardHeader: function (boardTitle, boardId, loggedInUser) {
+    createBoardHeader: function (boardTitle, boardId, loggedIn) {
         let boardHeader = document.createElement("div");
         boardHeader.classList.add('board-header');
         boardHeader.innerHTML = `
@@ -47,7 +47,7 @@ export let templates = {
             `;
 
         boardHeader.dataset.tableIsOpen = 'true';
-        if (loggedInUser) {
+        if (loggedIn) {
             templates.editBoardTitle(boardHeader, boardId);
         }
 
@@ -100,13 +100,13 @@ export let templates = {
         let boardId = board.dataset.boardId;
         dataHandler.deleteBoard(boardId);
     },
-    createBoardBody: function(boardStatuses, boardId, loggedInUser) {
+    createBoardBody: function(boardStatuses, boardId, loggedIn) {
         let boardBody = document.createElement("div");
         boardBody.classList.add('board-body');
 
         let table = document.createElement('table');
         table.classList.add('board-data');
-        let tableHeader = templates.createTableHeader(boardStatuses, boardId, loggedInUser);
+        let tableHeader = templates.createTableHeader(boardStatuses, boardId, loggedIn);
         let tableBody = templates.createTableBody(boardStatuses);
         table.appendChild(tableHeader);
         table.appendChild(tableBody);
@@ -114,14 +114,14 @@ export let templates = {
         boardBody.appendChild(table);
         return boardBody
     },
-    createTableHeader: function (boardStatuses, boardId, loggedInUser) {
+    createTableHeader: function (boardStatuses, boardId, loggedIn) {
         let tableHeader = document.createElement('tr');
         tableHeader.classList.add('statuses');
         for (const status of boardStatuses) {
             let cell = document.createElement('th');
             cell.innerHTML = `${status}`;
             cell.dataset.cellTitle = cell.innerHTML;
-            if (loggedInUser) {
+            if (loggedIn) {
                 templates.editTableHeader(cell, boardStatuses, boardId);
             }
             tableHeader.appendChild(cell);
@@ -159,13 +159,13 @@ export let templates = {
         }
         return tableBody
     },
-    createCardElement: function(cardTitle, cardId, orderNum, loggedInUser) {
+    createCardElement: function(cardTitle, cardId, orderNum, loggedIn) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.setAttribute("data-order", orderNum);
         cardElement.innerHTML = `<p>${cardTitle}</p>`;
 
-        if (loggedInUser) {
+        if (loggedIn) {
             cardElement.innerHTML = `<p>${cardTitle}</p>
                                  <p><i class="fas fa-trash-alt" title="Delete Card"></i></p>`;
             templates.editCardTitle(cardElement, cardId);
@@ -237,11 +237,11 @@ export let templates = {
             boardHeader.dataset.initHeight = `${tableHeight}`;
         });
     },
-    createBoardFooter: function(loggedInUser, username) {
+    createBoardFooter: function(loggedIn, username) {
         let boardFooter = document.createElement("div");
         boardFooter.classList.add('board-footer');
 
-        if (loggedInUser) {
+        if (loggedIn) {
             boardFooter.innerHTML = `
             <p><i class="fas fa-unlock-alt"></i> Created by: ${username}</p>
             `;
