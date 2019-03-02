@@ -2,7 +2,7 @@ import {dataHandler} from "./data_handler.js";
 import {dom} from "./dom.js";
 
 function init() {
-    dataHandler.getPublicBoards();
+    dataHandler.getBoards();
 
     const state = localStorage.getItem("state");
     if (state === "loggedIn") {

@@ -4,9 +4,9 @@ export let dataHandler = {
     reloadContent: function() {
         let fullContent = document.querySelector("#full-content");
         fullContent.innerHTML = "";
-        dataHandler.getPublicBoards();
+        dataHandler.getBoards();
     },
-    getPublicBoards: function() {
+    getBoards: function() {
         fetch('/boards')
             .then((response) => response.json())
             .then((response) => dom.showBoards(response))
@@ -91,7 +91,8 @@ export let dataHandler = {
         })
             .then(response => {
                 console.log('Success:', JSON.stringify(response));
-                dataHandler.reloadContent();
+                //dataHandler.reloadContent();
+                window.location.href = ('/');
             });
     },
     ajaxWrapperWithoutReload: function(url, data, method) {
