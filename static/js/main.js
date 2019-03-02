@@ -5,7 +5,7 @@ function init() {
     dataHandler.getPublicBoards();
 
     const state = localStorage.getItem("state");
-    if (state) {
+    if (state === "loggedIn") {
         const addNewPublicBoard = document.querySelector('#new-board-button');
         addNewPublicBoard.addEventListener('click', function() {
             dataHandler.saveNewPublicBoard();

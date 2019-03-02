@@ -25,56 +25,56 @@ def save_board():
     data = request.get_json()
     data["user_id"] = session["user_id"]
     data_manager.add_new_board(data)
-    return "", 204
+    return "", 200
 
 
 @app.route('/boards', methods=["PUT"])
 def update_board_title():
     data = request.get_json()
     data_manager.update_board_title(data)
-    return "", 204
+    return "", 200
 
 
 @app.route('/boards', methods=["DELETE"])
 def delete_board():
     data = request.get_json()
     data_manager.delete_board(data)
-    return "", 204
+    return "", 200
 
 
 @app.route("/cards", methods=["POST"])
 def save_card():
     data = request.get_json()
     data_manager.add_new_card(data)
-    return "", 204
+    return "", 200
 
 
 @app.route('/cards', methods=["PUT"])
 def update_card_title():
     data = request.get_json()
     data_manager.update_card_title(data)
-    return "", 204
+    return "", 200
 
 
 @app.route("/cards", methods=["DELETE"])
 def delete_card():
     data = request.get_json()
     data_manager.delete_card(data)
-    return "", 204
+    return "", 200
 
 
 @app.route('/statuses', methods=["PUT"])
 def update_statuses():
     data = request.get_json()
     data_manager.update_statuses(data)
-    return "", 204
+    return "", 200
 
 
 @app.route('/card-order-update', methods=["PUT"])
 def update_card_order():
     data = request.get_json()
     data_manager.update_card_order(data)
-    return "", 204
+    return "", 200
 
 
 @app.route('/registration', methods=['POST'])
@@ -101,6 +101,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop("user_id", None)
     return "", 200
 
 

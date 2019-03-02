@@ -10,14 +10,14 @@ export let dom = {
     },
     showCards: function(board) {
         let cards = board.cards;
-        let loggedIn = localStorage.getItem("state");
+        let state = localStorage.getItem("state");
         for (let i = 0; i < cards.length; i++) {
             let column = dom.addCard(board, cards[i]);
-            let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num, loggedIn);
+            let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num, state);
             column.appendChild(cardElement);
         }
     },
-    addCard: function (board, card) {
+    addCard: function(board, card) {
         let column;
         if (card.status_id === 1) {
             column = document.querySelector(`.board[data-board-id='${board.id}'] .cards > :first-child`);
@@ -33,7 +33,7 @@ export let dom = {
         }
         return column
     },
-    toggleBoard: function (event) {
+    toggleBoard: function(event) {
         if (event.target.className !== 'new-card-button' && event.target.className !== 'board-title' &&
             event.target.className !== 'delete-board-button') {
             let boardHeader;
