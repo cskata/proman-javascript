@@ -4,8 +4,8 @@ import {dom} from "./dom.js";
 function init() {
     dataHandler.getPublicBoards();
 
-    const fullContent = document.querySelector("#full-content");
-    if (fullContent.dataset.state) {
+    const state = localStorage.getItem("state");
+    if (state) {
         const addNewPublicBoard = document.querySelector('#new-board-button');
         addNewPublicBoard.addEventListener('click', function() {
             dataHandler.saveNewPublicBoard();

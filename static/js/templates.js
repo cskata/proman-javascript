@@ -4,7 +4,7 @@ import {dataHandler} from "./data_handler.js";
 export let templates = {
     createBoardElement: function (boardTitle, boardStatuses, boardId, username, userId) {
         let fullContent = document.querySelector('#full-content');
-        let loggedIn = fullContent.dataset.state;
+        let loggedIn = localStorage.getItem("state");
         let board = document.createElement('div');
         board.classList.add('board');
         board.dataset.boardId = boardId;

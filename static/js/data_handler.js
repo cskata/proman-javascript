@@ -137,6 +137,7 @@ export let dataHandler = {
             .then((obj) => {
                 console.log(obj.state, obj.error);
                 if (obj.state) {
+                    localStorage.setItem("state", "loggedIn");
                     window.location.href = ('/');
                 } else {
                     alert("Sorry, incorrect username or password!");
@@ -148,8 +149,7 @@ export let dataHandler = {
         fetch(url)
             .then((response) => {
                 console.log(response);
-                const fullContent = document.querySelector("#full-content");
-                fullContent.dataset.state = "";
+                localStorage.setItem("state", "");
                 window.location.href = ('/');
             })
     }

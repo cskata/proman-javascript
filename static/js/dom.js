@@ -10,10 +10,10 @@ export let dom = {
     },
     showCards: function(board) {
         let cards = board.cards;
-        let loggedInUser = document.querySelector("#full-content").dataset.state;
+        let loggedIn = localStorage.getItem("state");
         for (let i = 0; i < cards.length; i++) {
             let column = dom.addCard(board, cards[i]);
-            let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num, loggedInUser);
+            let cardElement = templates.createCardElement(cards[i].title, cards[i].id, cards[i].order_num, loggedIn);
             column.appendChild(cardElement);
         }
     },
