@@ -8,7 +8,10 @@ app.secret_key = os.urandom(128)
 
 @app.route("/")
 def route_index():
-    return render_template('boards.html')
+    if "username" in session:
+        return render_template('boards.html', logged_in=True)
+    else:
+        return render_template('boards.html', logged_in=False)
 
 
 @app.route("/boards", methods=['GET'])

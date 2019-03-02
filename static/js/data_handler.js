@@ -91,8 +91,7 @@ export let dataHandler = {
         })
             .then(response => {
                 console.log('Success:', JSON.stringify(response));
-                //dataHandler.reloadContent();
-                window.location.href = ('/');
+                dataHandler.reloadContent();
             });
     },
     ajaxWrapperWithoutReload: function(url, data, method) {

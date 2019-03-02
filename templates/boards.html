@@ -27,7 +27,7 @@
     <body>
         <nav>
             <span>Proman</span>
-            {% if "username" in session %}
+            {% if logged_in %}
                 <button id="new-board-button">Add Public Board</button>
                 <button id="new-private-board-button">Add Private Board</button>
                 <button type="button" id="logout" class="">Logout</button>
