@@ -34,15 +34,23 @@ def save_board():
 @app.route('/boards', methods=["PUT"])
 def update_board_title():
     data = request.get_json()
-    data_manager.update_board_title(data)
-    return "", 200
+    user_id = data_manager.get_user_id_for_board(data["id"])
+    if "user_id" in session and user_id == session["user_id"]:
+        data_manager.update_board_title(data)
+        return "", 200
+    else:
+        return "", 403
 
 
 @app.route('/boards', methods=["DELETE"])
 def delete_board():
     data = request.get_json()
-    data_manager.delete_board(data)
-    return "", 200
+    user_id = data_manager.get_user_id_for_board(data["board_id"])
+    if "user_id" in session and user_id == session["user_id"]:
+        data_manager.delete_board(data)
+        return "", 200
+    else:
+        return "", 403
 
 
 @app.route("/cards", methods=["POST"])
