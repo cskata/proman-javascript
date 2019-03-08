@@ -56,8 +56,12 @@ def delete_board():
 @app.route("/cards", methods=["POST"])
 def save_card():
     data = request.get_json()
-    data_manager.add_new_card(data)
-    return "", 200
+    user_id = data_manager.get_user_id_for_board(data["board_id"])
+    if "user_id" in session and user_id == session["user_id"]:
+        data_manager.add_new_card(data)
+        return "", 200
+    else:
+        return "", 403
 
 
 @app.route('/cards', methods=["PUT"])
@@ -77,8 +81,12 @@ def delete_card():
 @app.route('/statuses', methods=["PUT"])
 def update_statuses():
     data = request.get_json()
-    data_manager.update_statuses(data)
-    return "", 200
+    user_id = data_manager.get_user_id_for_board(data["id"])
+    if "user_id" in session and user_id == session["user_id"]:
+        data_manager.update_statuses(data)
+        return "", 200
+    else:
+        return "", 403
 
 
 @app.route('/card-order-update', methods=["PUT"])
