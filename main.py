@@ -16,7 +16,7 @@ def route_index():
 
 @app.route("/boards", methods=['GET'])
 def get_boards():
-    if 'username' in session:
+    if "username" in session:
         boards = data_manager.get_private_boards(session["username"])
     else:
         boards = data_manager.get_public_boards()
@@ -26,9 +26,12 @@ def get_boards():
 @app.route("/boards", methods=['POST'])
 def save_board():
     data = request.get_json()
-    data["user_id"] = session["user_id"]
-    data_manager.add_new_board(data)
-    return "", 200
+    if "user_id" in session:
+        data["user_id"] = session["user_id"]
+        data_manager.add_new_board(data)
+        return "", 200
+    else:
+        return "", 403
 
 
 @app.route('/boards', methods=["PUT"])
@@ -67,15 +70,23 @@ def save_card():
 @app.route('/cards', methods=["PUT"])
 def update_card_title():
     data = request.get_json()
-    data_manager.update_card_title(data)
-    return "", 200
+    user_id = data_manager.get_user_id_from_card_id(data["id"])
+    if "user_id" in session and user_id == session["user_id"]:
+        data_manager.update_card_title(data)
+        return "", 200
+    else:
+        return "", 403
 
 
 @app.route("/cards", methods=["DELETE"])
 def delete_card():
     data = request.get_json()
-    data_manager.delete_card(data)
-    return "", 200
+    user_id = data_manager.get_user_id_from_card_id(data["card_id"])
+    if "user_id" in session and user_id == session["user_id"]:
+        data_manager.delete_card(data)
+        return "", 200
+    else:
+        return "", 403
 
 
 @app.route('/statuses', methods=["PUT"])
@@ -92,8 +103,12 @@ def update_statuses():
 @app.route('/card-order-update', methods=["PUT"])
 def update_card_order():
     data = request.get_json()
-    data_manager.update_card_order(data)
-    return "", 200
+    user_id = data_manager.get_user_id_from_card_id(data["cardId"])
+    if "user_id" in session and user_id == session["user_id"]:
+        data_manager.update_card_order(data)
+        return "", 200
+    else:
+        return "", 403
 
 
 @app.route('/registration', methods=['POST'])
