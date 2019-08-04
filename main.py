@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, session, redirect, url_for, json
+from flask import Flask, render_template, jsonify, request, session
 import data_manager
 
 app = Flask(__name__)
