@@ -3,7 +3,7 @@ import data_manager
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(128)
+app.secret_key = "ff7F67BNtKkmGTseVkIjnTboXyN6k5/6IesaIrNsQUSfFAMm7NUYPYx6nzc7+W7GC9SYeMJjnxWR9ko2lRNYriBkyK91nPyaCW9wUuOQzh05N2G74xKvQ9gQne+M9Os6qdZ/3OmstZ+gs6TD01dcsIcVmj2PCYHwAGI7VNe3We4="
 
 
 @app.route("/")
