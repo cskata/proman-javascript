@@ -1,9 +1,8 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for, json
 import data_manager
-import os
 
 app = Flask(__name__)
-app.secret_key = "very_secret_key_123456789"
+app.secret_key = "ff7F67BNtKkmGTseVkIjnTboXyN6k5/6IesaIrNsQUSfFAMm7NUYPYx6nzc7+W7GC9SYeMJjnxWR9ko2lRNYriBkyK91nPyaCW9wUuOQzh05N2G74xKvQ9gQne+M9Os6qdZ/3OmstZ+gs6TD01dcsIcVmj2PCYHwAGI7VNe3We4="
 
 
 @app.route("/")
